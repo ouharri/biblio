@@ -2,11 +2,11 @@ package com.biblio.model;
 
 import java.util.Date;
 
-public class Borrowns {
+public class Borrown {
 
 	private int id;
-	private Books book;
-	private Users user;
+	private Book book;
+	private User user;
 	private Date loanDate;
 	private Date returnDate;
 	private Date expectedReturnDate;

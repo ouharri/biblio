@@ -11,7 +11,7 @@ public class CategoriesBook {
 		this.connection = database.getConnection();
 	}
 
-	private Books book;
-	private Categories category;
+	private Book book;
+	private Categorie category;
 
 }

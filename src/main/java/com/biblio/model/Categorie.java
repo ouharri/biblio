@@ -1,14 +1,14 @@
 package com.biblio.model;
 
-public class Categories {
+public class Categorie {
 
 	private String category;
 	private String description;
 
-	public Categories select() {
+	public Categorie select() {
 		return null;
 	}
-	public Categories add() {
+	public Categorie add() {
 		return null;
 	}
 

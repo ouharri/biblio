@@ -1,6 +1,6 @@
 package com.biblio.model;
 
-public class Users {
+public class User {
 
 	private int id;
 	private String firstName;
@@ -9,10 +9,10 @@ public class Users {
 	private int phone;
 	private int gender;
 	private String password;
-	public Users login() {
+	public User login() {
 		return null;
 	}
-	public Users register() {
+	public User register() {
 		return null;
 	}
 

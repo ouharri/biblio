@@ -12,10 +12,13 @@ import java.util.Map;
 public class db implements AutoCloseable {
     private Connection connection = null;
     protected String _table = null;
+    protected String _primaryKey = "id";
+    protected String _foreignKey = null;
 
-    public db(String tableName) {
+    public db(String tableName, String primaryKey) {
         this.connection = database.getConnection();
         this._table = tableName;
+        this._primaryKey = primaryKey;
     }
 
     public boolean create(Map<String, String> data) throws SQLException {
@@ -49,7 +52,7 @@ public class db implements AutoCloseable {
 
     public Map<String, String> read(int id) {
         try {
-            String query = "SELECT * FROM " + _table + " WHERE id = ?";
+            String query = "SELECT * FROM " + this._table + " WHERE "+ this._primaryKey +" = ?";
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
             preparedStatement.setInt(1, id);
 
@@ -66,7 +69,6 @@ public class db implements AutoCloseable {
         return null;
     }
 
-    // Méthode pour mettre à jour une ligne de la table par ID
     public boolean update(int id, Map<String, String> data) {
         try {
             StringBuilder setClause = new StringBuilder();
@@ -77,7 +79,7 @@ public class db implements AutoCloseable {
 
             setClause.setLength(setClause.length() - 1); // Supprimer la virgule finale
 
-            String query = "UPDATE " + _table + " SET " + setClause.toString() + " WHERE id = ?";
+            String query = "UPDATE " + _table + " SET " + setClause.toString() + " WHERE "+ this._primaryKey +" = ?";
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
 
             int index = 1;
@@ -97,7 +99,7 @@ public class db implements AutoCloseable {
 
     public boolean delete(int id) {
         try {
-            String query = "DELETE FROM " + _table + " WHERE id = ?";
+            String query = "DELETE FROM " + _table + " WHERE "+ this._primaryKey +" = ?";
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
             preparedStatement.setInt(1, id);
 

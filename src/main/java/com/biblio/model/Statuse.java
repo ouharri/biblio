@@ -3,15 +3,16 @@ package com.biblio.model;
 import java.sql.Connection;
 import com.biblio.core.database;
 
-public class Roles {
+public class Statuse {
 
 	private Connection connection;
 
-	public Roles() {
+	public Statuse() {
 		this.connection = database.getConnection();
 	}
 
 	private int id;
-	private String role;
+	private int attribute31;
+	private int status;
 
 }

@@ -14,7 +14,7 @@ public class Lost {
 	}
 
 
-	private Books book;
+	private Book book;
 	private Date loatDate;
 	private String description;
 	private int lostCount;

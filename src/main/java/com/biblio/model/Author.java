@@ -1,16 +1,16 @@
 package com.biblio.model;
 
-public class Authors {
+public class Author {
 
 	private int id;
 	private int firstName;
 	private int lastName;
 
-	public Authors select() {
+	public Author select() {
 		return null;
 	}
 
-	public Authors add() {
+	public Author add() {
 		return null;
 	}
 

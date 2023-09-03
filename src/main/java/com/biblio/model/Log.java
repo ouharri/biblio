@@ -3,27 +3,27 @@ package com.biblio.model;
 import java.sql.Connection;
 import com.biblio.core.database;
 
-public class Logs {
+public class Log {
 
 	private Connection connection;
 
-	public Logs() {
+	public Log() {
 		this.connection = database.getConnection();
 	}
 
 	public int id;
-	public Users user;
-	public Books book;
+	public User user;
+	public Book book;
 
-	private Logs select() {
+	private Log select() {
 		return null;
 	}
 
-	private Logs add() {
+	private Log add() {
 		return null;
 	}
 
-	private Logs update() {
+	private Log update() {
 		return null;
 	}
 

@@ -1,6 +1,6 @@
 package com.biblio;
 
-import com.biblio.model.Books;
+import com.biblio.model.Book;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -9,29 +9,21 @@ import java.util.Map;
 public class Main {
     public static void main(String[] args) throws SQLException {
 
+        try (Book book = new Book()) {
 
-        Books books = new Books();
+            book.setBook(123456789, 14, 100, "Le titre du livre 2", "1", "fr", "La description du livre");
 
-        books.setBook(123456789, 10, 100, "Le titre du livre", "1", "fr", "La description du livre");
-        books.save();
+            if (book.save()) {
+                System.out.println("Le livre a été inséré avec succès !" + book.toString());
+                Map<String, String> bookData = new HashMap<>();
+                bookData.put("isbn", "123456888");
+                book.update(book.getIsbn(),bookData);
+            } else {
+                System.out.println("Erreur lors de l'insertion du livre.");
+            }
 
-        // Créez un objet Map pour contenir les données du livre que vous souhaitez insérer
-        Map<String, String> bookData = new HashMap<>();
-        bookData.put("title", "Le titre du livre");
-        bookData.put("isbn", "123456789");
-        bookData.put("quantities", "10");
-        bookData.put("pages", "100");
-        bookData.put("edition", "1");
-        bookData.put("language", "fr");
-        bookData.put("description", "La description du livre");
-
-        // Utilisez la méthode create pour insérer les données dans la table
-        boolean success = books.create(bookData);
-
-        if (success) {
-            System.out.println("Le livre a été inséré avec succès !");
-        } else {
-            System.out.println("Erreur lors de l'insertion du livre.");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }

@@ -2,7 +2,7 @@ package com.biblio.model;
 
 public class BooksAuthors {
 
-	private Books book;
-	private Authors author;
+	private Book book;
+	private Author author;
 
 }

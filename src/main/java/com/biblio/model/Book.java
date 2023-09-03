@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public @Data class Books extends db{
+public @Data class Book extends db{
 
 	private int isbn;
 	private int quantities;
@@ -18,11 +18,11 @@ public @Data class Books extends db{
 	//private String category;
 	private String description;
 
-	public Books() {
-		super("books");
+	public Book() {
+		super("books", "isbn");
 	}
 
-	public Books setBook(int isbn, int quantities, int pages, String title, String edition, String language, String description) {
+	public void setBook(int isbn, int quantities, int pages, String title, String edition, String language, String description) {
 		this.isbn = isbn;
 		this.quantities = quantities;
 		this.pages = pages;
@@ -30,7 +30,6 @@ public @Data class Books extends db{
 		this.edition = edition;
 		this.language = language;
 		this.description = description;
-		return this;
 	}
 
 	public boolean save() throws SQLException {
