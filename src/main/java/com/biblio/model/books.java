@@ -1,5 +1,8 @@
 package com.biblio.model;
-public class books {
+
+import com.biblio.core.database;
+
+public class books extends database {
 
 	private int isbn;
 	private String title;

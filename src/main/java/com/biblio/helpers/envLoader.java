@@ -11,7 +11,7 @@ public class envLoader {
     private final Map<String, String> envVariables = new HashMap<>();
 
     public envLoader() {
-        loadEnv();
+        this.loadEnv();
     }
 
     private void loadEnv() {

@@ -10,30 +10,20 @@ public class database {
     private static Connection connection = null;
     private static final envLoader env = new envLoader();
 
-    public static String getDbUrl() {
-        return env.get("DB_URL");
-    }
-
-    public static String getDbUsername() {
-        return env.get("DB_USERNAME");
-    }
-
-    public static String getDbPassword() {
-        return env.get("DB_PASSWORD");
-    }
-
-    static {
+    public database() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String dbUrl = getDbUrl();
-            String dbUsername = getDbUsername();
-            String dbPassword = getDbPassword();
+            String dbUrl = env.get("DB_URL");
+            String dbUsername = env.get("DB_USERNAME");
+            String dbPassword = env.get("DB_PASSWORD");
             connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
             // Gérer les erreurs liées à la connexion à la base de données
         }
     }
+
+
 
     public static Connection getConnection() {
         return connection;
