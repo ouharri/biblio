@@ -12,6 +12,9 @@ public class Main {
 
         Books books = new Books();
 
+        books.setBook(123456789, 10, 100, "Le titre du livre", "1", "fr", "La description du livre");
+        books.save();
+
         // Créez un objet Map pour contenir les données du livre que vous souhaitez insérer
         Map<String, String> bookData = new HashMap<>();
         bookData.put("title", "Le titre du livre");

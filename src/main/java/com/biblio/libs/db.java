@@ -42,7 +42,7 @@ public class db implements AutoCloseable {
             int rowsAffected = preparedStatement.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
-            throw e; // Lancez une exception pour gérer l'erreur au niveau supérieur
+            throw e;
         }
     }
 

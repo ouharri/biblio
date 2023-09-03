@@ -5,25 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d8284fca-0536-45ca-81e3-1e937ee89502" name="Changes" comment="L-1 conception UML">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/biblio/libs/db.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/core/database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/core/database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/authors.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/Authors.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/baned.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/Baned.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/books.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/Books.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/booksAuthors.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/BooksAuthors.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/borrowns.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/Borrowns.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/categories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/Categories.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/categoriesBook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/CategoriesBook.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/librarians.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/Librarians.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/logs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/Logs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/lost.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/Lost.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/members.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/Members.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/roles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/Roles.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/statuses.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/Statuses.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/users.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/Users.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/libs/db.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/libs/db.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/Books.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/Books.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,10 +39,10 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
+    "dart.analysis.tool.window.visible": "false",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/proj/biblio/src/main/resources/mysql-connector-java-8.0.18.jar",
+    "last_opened_file_path": "C:/proj/biblio/src/main/resources/lombok.jar",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -65,7 +52,7 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -85,7 +72,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1693613862767</updated>
-      <workItem from="1693613864244" duration="23818000" />
+      <workItem from="1693613864244" duration="27082000" />
+      <workItem from="1693766434872" duration="1863000" />
     </task>
     <task id="LOCAL-00001" summary="setup project">
       <created>1693690034534</created>
@@ -108,7 +96,14 @@
       <option name="project" value="LOCAL" />
       <updated>1693702685030</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="L-1 conception UML">
+      <created>1693710142570</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1693710142570</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
