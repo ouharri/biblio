@@ -10,7 +10,7 @@ public class database {
     private static Connection connection = null;
     private static final envLoader env = new envLoader();
 
-    public database() {
+   static {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             String dbUrl = env.get("DB_URL");
@@ -21,7 +21,7 @@ public class database {
             e.printStackTrace();
             // Gérer les erreurs liées à la connexion à la base de données
         }
-    }
+   }
 
 
 
@@ -29,15 +29,7 @@ public class database {
         return connection;
     }
 
-    public static void closeConnection() {
-        if (connection != null) {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                // Gérer les erreurs de fermeture de la connexion
-            }
-        }
-    }
+
+
 }
 

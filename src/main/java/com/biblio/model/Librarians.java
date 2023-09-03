@@ -3,11 +3,11 @@ package com.biblio.model;
 import java.sql.Connection;
 import com.biblio.core.database;
 
-public class librarians extends users {
+public class Librarians extends Users {
 
     private Connection connection;
 
-    public librarians() {
+    public Librarians() {
         this.connection = database.getConnection();
     }
 

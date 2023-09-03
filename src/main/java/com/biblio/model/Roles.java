@@ -3,11 +3,11 @@ package com.biblio.model;
 import java.sql.Connection;
 import com.biblio.core.database;
 
-public class roles {
+public class Roles {
 
 	private Connection connection;
 
-	public roles() {
+	public Roles() {
 		this.connection = database.getConnection();
 	}
 

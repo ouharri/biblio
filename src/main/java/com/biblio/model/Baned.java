@@ -1,4 +1,4 @@
 package com.biblio.model;
-public class baned {
+public class Baned {
 
 }

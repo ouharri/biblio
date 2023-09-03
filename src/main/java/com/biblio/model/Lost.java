@@ -5,30 +5,30 @@ import java.sql.Connection;
 import com.biblio.core.database;
 
 
-public class lost {
+public class Lost {
 
 	private Connection connection;
 
-	public lost() {
+	public Lost() {
 		this.connection = database.getConnection();
 	}
 
 
-	private books book;
+	private Books book;
 	private Date loatDate;
 	private String description;
 	private int lostCount;
 
 
-	private lost select() {
+	private Lost select() {
 		return null;
 	}
 
-	private lost add() {
+	private Lost add() {
 		return null;
 	}
 
-	private lost update() {
+	private Lost update() {
 		return null;
 	}
 

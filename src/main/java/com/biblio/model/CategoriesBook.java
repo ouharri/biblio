@@ -3,15 +3,15 @@ package com.biblio.model;
 import java.sql.Connection;
 import com.biblio.core.database;
 
-public class categoriesBook {
+public class CategoriesBook {
 
 	private Connection connection;
 
-	public categoriesBook() {
+	public CategoriesBook() {
 		this.connection = database.getConnection();
 	}
 
-	private books book;
-	private categories category;
+	private Books book;
+	private Categories category;
 
 }

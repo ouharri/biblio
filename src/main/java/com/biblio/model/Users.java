@@ -1,9 +1,6 @@
 package com.biblio.model;
 
-import java.sql.Connection;
-import com.biblio.core.database;
-
-public class users {
+public class Users {
 
 	private int id;
 	private String firstName;
@@ -12,10 +9,10 @@ public class users {
 	private int phone;
 	private int gender;
 	private String password;
-	public users login() {
+	public Users login() {
 		return null;
 	}
-	public users register() {
+	public Users register() {
 		return null;
 	}
 

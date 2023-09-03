@@ -1,18 +1,18 @@
 package com.biblio.model;
 
-public class categories {
+public class Categories {
 
 	private String category;
 	private String description;
 
-	public categories select() {
+	public Categories select() {
 		return null;
 	}
-	public categories add() {
+	public Categories add() {
 		return null;
 	}
 
-	public categoriesBook update() {
+	public CategoriesBook update() {
 		return null;
 	}
 

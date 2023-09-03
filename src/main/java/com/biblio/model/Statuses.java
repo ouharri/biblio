@@ -3,16 +3,16 @@ package com.biblio.model;
 import java.sql.Connection;
 import com.biblio.core.database;
 
-public class members extends users {
+public class Statuses {
 
 	private Connection connection;
 
-	public members() {
+	public Statuses() {
 		this.connection = database.getConnection();
 	}
 
-	public void borrow() {
-
-	}
+	private int id;
+	private int attribute31;
+	private int status;
 
 }

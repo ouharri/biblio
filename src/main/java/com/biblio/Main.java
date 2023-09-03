@@ -1,23 +1,35 @@
 package com.biblio;
 
-import com.biblio.model.books;
+import com.biblio.model.Books;
 
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+
 public class Main {
-    public static void main(String[] args) {
-        // Press Alt+Enter with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        new books();
+    public static void main(String[] args) throws SQLException {
 
-        System.out.print("Hello and welcome! \n");
 
-        // Press Shift+F10 or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
+        Books books = new Books();
 
-            // Press Shift+F9 to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Ctrl+F8.
-            System.out.println("i = " + i);
+        // Créez un objet Map pour contenir les données du livre que vous souhaitez insérer
+        Map<String, String> bookData = new HashMap<>();
+        bookData.put("title", "Le titre du livre");
+        bookData.put("isbn", "123456789");
+        bookData.put("quantities", "10");
+        bookData.put("pages", "100");
+        bookData.put("edition", "1");
+        bookData.put("language", "fr");
+        bookData.put("description", "La description du livre");
+
+        // Utilisez la méthode create pour insérer les données dans la table
+        boolean success = books.create(bookData);
+
+        if (success) {
+            System.out.println("Le livre a été inséré avec succès !");
+        } else {
+            System.out.println("Erreur lors de l'insertion du livre.");
         }
+
     }
 }
