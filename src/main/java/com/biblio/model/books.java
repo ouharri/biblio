@@ -1,20 +1,14 @@
+package com.biblio.model;
 public class books {
 
 	private int isbn;
-
-	private string title;
-
-	private string pages;
-
-	private string edition;
-
-	private string language;
-
-	private string category;
-
-	private string description;
-
-	private string quantities;
+	private String title;
+	private String pages;
+	private String edition;
+	private String language;
+	private String category;
+	private String description;
+	private String quantities;
 
 	public boolean add() {
 		return false;

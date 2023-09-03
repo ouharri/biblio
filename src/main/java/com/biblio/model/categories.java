@@ -1,13 +1,13 @@
+package com.biblio.model;
+
 public class categories {
 
-	private string category;
-
-	private string description;
+	private String category;
+	private String description;
 
 	public categories select() {
 		return null;
 	}
-
 	public categories add() {
 		return null;
 	}

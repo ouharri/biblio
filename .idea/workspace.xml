@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8284fca-0536-45ca-81e3-1e937ee89502" name="Changes" comment="">
+    <list default="true" id="d8284fca-0536-45ca-81e3-1e937ee89502" name="Changes" comment="setup project">
       <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
@@ -12,7 +12,22 @@
       <change afterPath="$PROJECT_DIR$/src/main/java/com/biblio/core/database.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/com/biblio/helpers/envLoader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/authors.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/authors.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/baned.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/baned.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/books.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/books.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/booksauthors.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/booksAuthors.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/borrowns.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/borrowns.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/categories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/categories.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/categoriesBook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/categoriesBook.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/librarians.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/librarians.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/logs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/logs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/lost.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/lost.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/members.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/members.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/roles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/roles.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/statuses.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/statuses.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/users.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/users.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/biblio/Main.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -74,11 +89,23 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1693613862767</updated>
-      <workItem from="1693613864244" duration="10788000" />
+      <workItem from="1693613864244" duration="16058000" />
     </task>
+    <task id="LOCAL-00001" summary="setup project">
+      <created>1693690034534</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1693690034535</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="setup project" />
+    <option name="LAST_COMMIT_MESSAGE" value="setup project" />
   </component>
 </project>

@@ -1,23 +1,20 @@
+package com.biblio.model;
+
+import java.sql.Connection;
+import com.biblio.core.database;
+
 public class users {
 
 	private int id;
-
-	private string firstName;
-
-	private string lastName;
-
-	private string email;
-
+	private String firstName;
+	private String lastName;
+	private String email;
 	private int phone;
-
 	private int gender;
-
-	private string password;
-
+	private String password;
 	public users login() {
 		return null;
 	}
-
 	public users register() {
 		return null;
 	}

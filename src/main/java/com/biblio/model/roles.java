@@ -1,7 +1,17 @@
+package com.biblio.model;
+
+import java.sql.Connection;
+import com.biblio.core.database;
+
 public class roles {
 
-	private int id;
+	private Connection connection;
 
-	private string role;
+	public roles() {
+		this.connection = database.getConnection();
+	}
+
+	private int id;
+	private String role;
 
 }
