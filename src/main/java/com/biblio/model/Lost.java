@@ -1,9 +1,5 @@
 package com.biblio.model;
 
-import java.util.Date;
-import java.sql.Connection;
-import com.biblio.core.database;
-
 import com.biblio.dao.LostDao;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,9 +8,9 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class Lost extends LostDao {
 
-	public int book;
-	public java.sql.Date loastDate;
 	public int lostCount;
+	public Book book;
+	public java.sql.Date loastDate;
 	public String description;
 
 }

@@ -8,9 +8,10 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class waitingList extends WaitingListDao {
 
+
     public int id;
-    public int book;
-    public int user;
-    public int loan;
+    public Loans loan;
+    public Book book;
+    public User user;
     public java.sql.Date create_at;
 }

@@ -9,7 +9,7 @@ public class App {
 
         try (Book book = new Book()) {
 
-            book.setBook("30", 14, 100, "Le titre du livre 2", "1", "fr", "La description du livre");
+            book.setBook("98990", 15, 100, "Le titre du livre 2", "1", "fr", "La description du livre");
 
             if (book.save()) {
                 System.out.println("Le livre a été inséré avec succès !" + book.toString());

@@ -15,11 +15,36 @@ public class db implements AutoCloseable {
     protected String[] _primaryKey = {"id"};
     protected String _foreignKey = null;
 
+    private boolean inTransaction = false;
+
     public db(String tableName, String[] primaryKey) {
         this.connection = database.getConnection();
         this._table = tableName;
         if (primaryKey != null && primaryKey.length > 0) {
             this._primaryKey = primaryKey;
+        }
+    }
+
+    public void beginTransaction() throws SQLException {
+        if (!inTransaction) {
+            this.connection.setAutoCommit(false);
+            this.inTransaction = true;
+        }
+    }
+
+    public void commitTransaction() throws SQLException {
+        if (inTransaction) {
+            this.connection.commit();
+            this.connection.setAutoCommit(true);
+            this.inTransaction = false;
+        }
+    }
+
+    public void rollbackTransaction() throws SQLException {
+        if (inTransaction) {
+            this.connection.rollback();
+            this.connection.setAutoCommit(true);
+            this.inTransaction = false;
         }
     }
 

@@ -12,7 +12,4 @@ public class Author extends AuthorDao {
 	public String firstName;
 	public String lastName;
 
-
-
-
 }
