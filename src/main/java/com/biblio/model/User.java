@@ -1,19 +1,20 @@
 package com.biblio.model;
 
-public class User {
+import com.biblio.dao.UserDao;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-	private int id;
-	private String firstName;
-	private String lastName;
-	private String email;
-	private int phone;
-	private int gender;
-	private String password;
-	public User login() {
-		return null;
-	}
-	public User register() {
-		return null;
-	}
+@Data
+@EqualsAndHashCode(callSuper = true)
+public class User extends UserDao {
+
+	public int id;
+	public String firstName;
+	public String lastName;
+	public String email;
+	public int phone;
+	public String gender;
+	public String password;
+	public java.sql.Timestamp delete_at;
 
 }

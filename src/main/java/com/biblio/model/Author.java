@@ -1,17 +1,18 @@
 package com.biblio.model;
 
-public class Author {
+import com.biblio.dao.AuthorDao;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-	private int id;
-	private int firstName;
-	private int lastName;
+@Data
+@EqualsAndHashCode(callSuper = true)
+public class Author extends AuthorDao {
 
-	public Author select() {
-		return null;
-	}
+	public int id;
+	public String firstName;
+	public String lastName;
 
-	public Author add() {
-		return null;
-	}
+
+
 
 }

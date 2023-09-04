@@ -12,13 +12,15 @@ import java.util.Map;
 public class db implements AutoCloseable {
     private Connection connection = null;
     protected String _table = null;
-    protected String _primaryKey = "id";
+    protected String[] _primaryKey = {"id"};
     protected String _foreignKey = null;
 
-    public db(String tableName, String primaryKey) {
+    public db(String tableName, String[] primaryKey) {
         this.connection = database.getConnection();
         this._table = tableName;
-        this._primaryKey = primaryKey;
+        if (primaryKey != null && primaryKey.length > 0) {
+            this._primaryKey = primaryKey;
+        }
     }
 
     public boolean create(Map<String, String> data) throws SQLException {
@@ -31,8 +33,8 @@ public class db implements AutoCloseable {
                 values.append("?").append(",");
             }
 
-            columns.setLength(columns.length() - 1); // Supprimer la virgule finale
-            values.setLength(values.length() - 1); // Supprimer la virgule finale
+            columns.setLength(columns.length() - 1);
+            values.setLength(values.length() - 1);
 
             String query = "INSERT INTO " + _table + " (" + columns.toString() + ") VALUES (" + values.toString() + ")";
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
@@ -49,12 +51,23 @@ public class db implements AutoCloseable {
         }
     }
 
-
-    public Map<String, String> read(int id) {
+    public Map<String, String> read(int[] ids) {
         try {
-            String query = "SELECT * FROM " + this._table + " WHERE "+ this._primaryKey +" = ?";
+            // Construisez la clause WHERE en fonction des clés primaires
+            StringBuilder whereClause = new StringBuilder();
+            for (int i = 0; i < _primaryKey.length; i++) {
+                whereClause.append(_primaryKey[i]).append(" = ?");
+                if (i < _primaryKey.length - 1) {
+                    whereClause.append(" AND ");
+                }
+            }
+
+            String query = "SELECT * FROM " + this._table + " WHERE " + whereClause.toString();
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
-            preparedStatement.setInt(1, id);
+
+            for (int i = 0; i < ids.length; i++) {
+                preparedStatement.setInt(i + 1, ids[i]);
+            }
 
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -69,24 +82,37 @@ public class db implements AutoCloseable {
         return null;
     }
 
-    public boolean update(int id, Map<String, String> data) {
+    public boolean update(int[] ids, Map<String, String> data) {
         try {
+            // Construisez la clause SET pour la mise à jour
             StringBuilder setClause = new StringBuilder();
-
             for (Map.Entry<String, String> entry : data.entrySet()) {
                 setClause.append(entry.getKey()).append(" = ?,");
             }
-
             setClause.setLength(setClause.length() - 1); // Supprimer la virgule finale
 
-            String query = "UPDATE " + _table + " SET " + setClause.toString() + " WHERE "+ this._primaryKey +" = ?";
+            // Construisez la clause WHERE en fonction des clés primaires
+            StringBuilder whereClause = new StringBuilder();
+            for (int i = 0; i < _primaryKey.length; i++) {
+                whereClause.append(_primaryKey[i]).append(" = ?");
+                if (i < _primaryKey.length - 1) {
+                    whereClause.append(" AND ");
+                }
+            }
+
+            String query = "UPDATE " + _table + " SET " + setClause.toString() + " WHERE " + whereClause.toString();
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
 
+            // Définissez les nouvelles valeurs
             int index = 1;
             for (String value : data.values()) {
                 preparedStatement.setString(index++, value);
             }
-            preparedStatement.setInt(index, id);
+
+            // Définissez les valeurs des clés primaires
+            for (int id : ids) {
+                preparedStatement.setInt(index++, id);
+            }
 
             int rowsAffected = preparedStatement.executeUpdate();
             return rowsAffected > 0;
@@ -96,12 +122,24 @@ public class db implements AutoCloseable {
         }
     }
 
-
-    public boolean delete(int id) {
+    public boolean delete(int[] ids) {
         try {
-            String query = "DELETE FROM " + _table + " WHERE "+ this._primaryKey +" = ?";
+            // Construisez la clause WHERE en fonction des clés primaires
+            StringBuilder whereClause = new StringBuilder();
+            for (int i = 0; i < _primaryKey.length; i++) {
+                whereClause.append(_primaryKey[i]).append(" = ?");
+                if (i < _primaryKey.length - 1) {
+                    whereClause.append(" AND ");
+                }
+            }
+
+            String query = "DELETE FROM " + _table + " WHERE " + whereClause.toString();
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
-            preparedStatement.setInt(1, id);
+
+            // Définissez les valeurs des clés primaires
+            for (int i = 0; i < ids.length; i++) {
+                preparedStatement.setInt(i + 1, ids[i]);
+            }
 
             int rowsAffected = preparedStatement.executeUpdate();
             return rowsAffected > 0;

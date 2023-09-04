@@ -4,36 +4,17 @@ import java.util.Date;
 import java.sql.Connection;
 import com.biblio.core.database;
 
+import com.biblio.dao.LostDao;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-public class Lost {
+@Data
+@EqualsAndHashCode(callSuper = true)
+public class Lost extends LostDao {
 
-	private Connection connection;
-
-	public Lost() {
-		this.connection = database.getConnection();
-	}
-
-
-	private Book book;
-	private Date loatDate;
-	private String description;
-	private int lostCount;
-
-
-	private Lost select() {
-		return null;
-	}
-
-	private Lost add() {
-		return null;
-	}
-
-	private Lost update() {
-		return null;
-	}
-
-	private boolean delet() {
-		return false;
-	}
+	public int book;
+	public java.sql.Date loastDate;
+	public int lostCount;
+	public String description;
 
 }

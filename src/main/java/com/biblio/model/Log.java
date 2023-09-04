@@ -3,32 +3,17 @@ package com.biblio.model;
 import java.sql.Connection;
 import com.biblio.core.database;
 
-public class Log {
+import com.biblio.dao.LogDao;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-	private Connection connection;
-
-	public Log() {
-		this.connection = database.getConnection();
-	}
+@Data
+@EqualsAndHashCode(callSuper = true)
+public class Log extends LogDao {
 
 	public int id;
-	public User user;
-	public Book book;
-
-	private Log select() {
-		return null;
-	}
-
-	private Log add() {
-		return null;
-	}
-
-	private Log update() {
-		return null;
-	}
-
-	private boolean delete() {
-		return false;
-	}
+	public int user;
+	public int book;
+	public java.sql.Timestamp create_at;
 
 }

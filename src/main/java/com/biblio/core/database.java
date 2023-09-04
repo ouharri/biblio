@@ -19,7 +19,6 @@ public class database {
             connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
-            // Gérer les erreurs liées à la connexion à la base de données
         }
    }
 

@@ -1,28 +1,28 @@
 package com.biblio.model;
 
+import com.biblio.dao.BookDao;
 import com.biblio.libs.db;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public @Data class Book extends db{
+@Data
+@EqualsAndHashCode(callSuper = true)
+public class Book extends BookDao {
 
-	private int isbn;
-	private int quantities;
-	private int pages;
-	private String title;
-	private String edition;
-	private String language;
-	//private String category;
-	private String description;
+	public int quantities;
+	public int pages;
+	public String isbn;
+	public String title;
+	public String edition;
+	public String language;
+	public String description;
+	public java.sql.Timestamp delete_at;
 
-	public Book() {
-		super("books", "isbn");
-	}
-
-	public void setBook(int isbn, int quantities, int pages, String title, String edition, String language, String description) {
+	public void setBook(String isbn, int quantities, int pages, String title, String edition, String language, String description) {
 		this.isbn = isbn;
 		this.quantities = quantities;
 		this.pages = pages;
