@@ -8,9 +8,10 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class Category extends CategoryDao {
 
-	public int id;
-	public String category;
-	public String description;
-	public java.sql.Timestamp delete_at;
+	private int id;
+	private Book[] book = null;
+	private String category;
+	private String description;
+	private java.sql.Timestamp delete_at;
 
 }

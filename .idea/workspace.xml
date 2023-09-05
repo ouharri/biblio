@@ -5,11 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="974a4e58-64ac-46a1-b270-b71322b9e800" name="Changes" comment="L-2 migrate to javaFX">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/class.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/useCase.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/dao/BookDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/dao/BookDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/dao/BooksAuthorsDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/dao/BooksAuthorsDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/dao/CategorieBookDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/dao/CategorieBookDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/libs/db.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/libs/db.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/Author.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/Author.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/Book.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/Category.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +49,11 @@
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
   }
 }]]></component>
   <component name="RecentsManager">
@@ -61,6 +72,7 @@
       <option name="presentableId" value="Default" />
       <updated>1693863773992</updated>
       <workItem from="1693863776305" duration="2672000" />
+      <workItem from="1693869703177" duration="16527000" />
     </task>
     <task id="LOCAL-00001" summary="L-2 migrate to javaFX">
       <created>1693864551197</created>
@@ -69,7 +81,14 @@
       <option name="project" value="LOCAL" />
       <updated>1693864551197</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="L-2 migrate to javaFX">
+      <created>1693870009926</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1693870009926</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

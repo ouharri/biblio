@@ -9,13 +9,16 @@ public class App {
 
         try (Book book = new Book()) {
 
-            book.setBook("98990", 15, 100, "Le titre du livre 2", "1", "fr", "La description du livre");
+//            book.setBook("98790", 15, 100, "Le titre du livre 2", "1", "fr", "La description du livre");
+            book.setIsbn("40");
 
-            if (book.save()) {
-                System.out.println("Le livre a été inséré avec succès !" + book.toString());
-            } else {
-                System.out.println("Erreur lors de l'insertion du livre.");
-            }
+            System.out.println(book.getBookWithDetails().toString());
+
+//            if (book.delete()) {
+//                System.out.println("Le livre a été inséré avec succès !" + book.toString());
+//            } else {
+//                System.out.println("Erreur lors de l'insertion du livre.");
+//            }
 
         } catch (Exception e) {
             e.printStackTrace();

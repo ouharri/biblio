@@ -2,18 +2,19 @@ package com.biblio.libs;
 
 import com.biblio.core.database;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class db implements AutoCloseable {
-    private Connection connection = null;
+    protected Connection connection = null;
     protected String _table = null;
     protected String[] _primaryKey = {"id"};
     protected String _foreignKey = null;
+
+    protected Boolean _softDelete = true;
 
     private boolean inTransaction = false;
 
@@ -48,6 +49,39 @@ public class db implements AutoCloseable {
         }
     }
 
+    public List<Map<String, String>> getAll() {
+        List<Map<String, String>> resultList = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM " + this._table;
+
+            // Ajoutez la condition pour le soft delete si _softDelete est true
+            if (this._softDelete) {
+                query += " WHERE delete_at IS NULL";
+            }
+
+            PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            ResultSetMetaData metaData = resultSet.getMetaData();
+            int columnCount = metaData.getColumnCount();
+
+            while (resultSet.next()) {
+                Map<String, String> rowData = new HashMap<>();
+
+                for (int i = 1; i <= columnCount; i++) {
+                    String columnName = metaData.getColumnName(i);
+                    rowData.put(columnName, resultSet.getString(columnName));
+                }
+
+                resultList.add(rowData);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultList;
+    }
+
+
     public boolean create(Map<String, String> data) throws SQLException {
         try {
             StringBuilder columns = new StringBuilder();
@@ -76,7 +110,7 @@ public class db implements AutoCloseable {
         }
     }
 
-    public Map<String, String> read(int[] ids) {
+    public Map<String, String> read(String[] ids) {
         try {
             // Construisez la clause WHERE en fonction des clés primaires
             StringBuilder whereClause = new StringBuilder();
@@ -88,17 +122,34 @@ public class db implements AutoCloseable {
             }
 
             String query = "SELECT * FROM " + this._table + " WHERE " + whereClause.toString();
+
+            // Ajoutez la condition pour le soft delete si _softDelete est true
+            if (this._softDelete) {
+                query += " AND delete_at IS NULL";
+            }
+
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
 
             for (int i = 0; i < ids.length; i++) {
-                preparedStatement.setInt(i + 1, ids[i]);
+                preparedStatement.setString(i + 1, ids[i]);
             }
 
             ResultSet resultSet = preparedStatement.executeQuery();
+
             if (resultSet.next()) {
                 Map<String, String> rowData = new HashMap<>();
+
                 // Remplir la map avec les données de la ligne
                 // Utilisez resultSet.getString("nom_de_la_colonne") pour récupérer les valeurs
+
+                ResultSetMetaData metaData = resultSet.getMetaData();
+                int columnCount = metaData.getColumnCount();
+
+                for (int i = 1; i <= columnCount; i++) {
+                    String columnName = metaData.getColumnName(i);
+                    rowData.put(columnName, resultSet.getString(columnName));
+                }
+
                 return rowData;
             }
         } catch (SQLException e) {
@@ -107,7 +158,126 @@ public class db implements AutoCloseable {
         return null;
     }
 
-    public boolean update(int[] ids, Map<String, String> data) {
+    public Map<String, String> read(String columnName, String value) {
+        try {
+            String query = "SELECT * FROM " + this._table + " WHERE " + columnName + " = ?";
+
+            // Ajoutez la condition pour le soft delete si _softDelete est true
+            if (this._softDelete) {
+                query += " AND delete_at IS NULL";
+            }
+
+            PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+            preparedStatement.setString(1, value);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                Map<String, String> rowData = new HashMap<>();
+
+                // Remplir la map avec les données de la ligne
+                // Utilisez resultSet.getString("nom_de_la_colonne") pour récupérer les valeurs
+
+                ResultSetMetaData metaData = resultSet.getMetaData();
+                int columnCount = metaData.getColumnCount();
+
+                for (int i = 1; i <= columnCount; i++) {
+                    String column = metaData.getColumnName(i);
+                    rowData.put(column, resultSet.getString(column));
+                }
+
+                return rowData;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+
+    public List<Map<String, String>> readAll(String columnName, String value) {
+        List<Map<String, String>> resultList = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM " + this._table + " WHERE " + columnName + " = ?";
+
+            // Ajoutez la condition pour le soft delete si _softDelete est true
+            if (this._softDelete) {
+                query += " AND delete_at IS NULL";
+            }
+
+            PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+            preparedStatement.setString(1, value);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            ResultSetMetaData metaData = resultSet.getMetaData();
+            int columnCount = metaData.getColumnCount();
+
+            while (resultSet.next()) {
+                Map<String, String> rowData = new HashMap<>();
+
+                for (int i = 1; i <= columnCount; i++) {
+                    String column = metaData.getColumnName(i);
+                    rowData.put(column, resultSet.getString(column));
+                }
+
+                resultList.add(rowData);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultList;
+    }
+
+    public List<Map<String, String>> readAll(String[] ids) {
+        List<Map<String, String>> resultList = new ArrayList<>();
+        try {
+            // Construisez la clause WHERE en fonction des clés primaires
+            StringBuilder whereClause = new StringBuilder();
+            for (int i = 0; i < _primaryKey.length; i++) {
+                whereClause.append(_primaryKey[i]).append(" = ?");
+                if (i < _primaryKey.length - 1) {
+                    whereClause.append(" AND ");
+                }
+            }
+
+            String query = "SELECT * FROM " + this._table + " WHERE " + whereClause.toString();
+
+            // Ajoutez la condition pour le soft delete si _softDelete est true
+            if (this._softDelete) {
+                query += " AND delete_at IS NULL";
+            }
+
+            PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+
+            for (int i = 0; i < ids.length; i++) {
+                preparedStatement.setString(i + 1, ids[i]);
+            }
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            ResultSetMetaData metaData = resultSet.getMetaData();
+            int columnCount = metaData.getColumnCount();
+
+            while (resultSet.next()) {
+                Map<String, String> rowData = new HashMap<>();
+
+                for (int i = 1; i <= columnCount; i++) {
+                    String columnName = metaData.getColumnName(i);
+                    rowData.put(columnName, resultSet.getString(columnName));
+                }
+
+                resultList.add(rowData);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultList;
+    }
+
+
+    public boolean update(Map<String, String> data,String[] ids) {
         try {
             // Construisez la clause SET pour la mise à jour
             StringBuilder setClause = new StringBuilder();
@@ -135,8 +305,8 @@ public class db implements AutoCloseable {
             }
 
             // Définissez les valeurs des clés primaires
-            for (int id : ids) {
-                preparedStatement.setInt(index++, id);
+            for (String id : ids) {
+                preparedStatement.setString(index++, id);
             }
 
             int rowsAffected = preparedStatement.executeUpdate();
@@ -147,7 +317,7 @@ public class db implements AutoCloseable {
         }
     }
 
-    public boolean delete(int[] ids) {
+    public boolean delete(String[] ids) {
         try {
             // Construisez la clause WHERE en fonction des clés primaires
             StringBuilder whereClause = new StringBuilder();
@@ -163,7 +333,7 @@ public class db implements AutoCloseable {
 
             // Définissez les valeurs des clés primaires
             for (int i = 0; i < ids.length; i++) {
-                preparedStatement.setInt(i + 1, ids[i]);
+                preparedStatement.setString(i + 1, ids[i]);
             }
 
             int rowsAffected = preparedStatement.executeUpdate();
@@ -173,6 +343,40 @@ public class db implements AutoCloseable {
             return false;
         }
     }
+
+    public boolean softDelete(String[] ids) {
+        try {
+            StringBuilder setClause = new StringBuilder();
+            setClause.append("delete_at = ?");
+
+            String query = "UPDATE " + _table + " SET " + setClause.toString() + " WHERE ";
+
+            StringBuilder whereClause = new StringBuilder();
+            for (int i = 0; i < _primaryKey.length; i++) {
+                whereClause.append(_primaryKey[i]).append(" = ?");
+                if (i < _primaryKey.length - 1) {
+                    whereClause.append(" AND ");
+                }
+            }
+
+            query += whereClause.toString();
+            PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+
+            java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(System.currentTimeMillis());
+            preparedStatement.setTimestamp(1, currentTimestamp);
+
+            for (int i = 0; i < ids.length; i++) {
+                preparedStatement.setString(i + 2, ids[i]);
+            }
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
     @Override
     public void close() throws Exception {
