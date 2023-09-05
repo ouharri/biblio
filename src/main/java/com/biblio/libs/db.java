@@ -1,6 +1,7 @@
 package com.biblio.libs;
 
 import com.biblio.core.database;
+import com.biblio.interfaces.CRUD;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -8,14 +9,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class db implements AutoCloseable {
+public class db implements AutoCloseable, CRUD {
     protected Connection connection = null;
     protected String _table = null;
     protected String[] _primaryKey = {"id"};
     protected String _foreignKey = null;
-
     protected Boolean _softDelete = true;
-
     private boolean inTransaction = false;
 
     public db(String tableName, String[] primaryKey) {
@@ -82,7 +81,8 @@ public class db implements AutoCloseable {
     }
 
 
-    public boolean create(Map<String, String> data) throws SQLException {
+    @Override
+    public String create(Map<String, String> data) throws SQLException {
         try {
             StringBuilder columns = new StringBuilder();
             StringBuilder values = new StringBuilder();
@@ -96,7 +96,7 @@ public class db implements AutoCloseable {
             values.setLength(values.length() - 1);
 
             String query = "INSERT INTO " + _table + " (" + columns.toString() + ") VALUES (" + values.toString() + ")";
-            PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+            PreparedStatement preparedStatement = this.connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
             int index = 1;
             for (String value : data.values()) {
@@ -104,15 +104,26 @@ public class db implements AutoCloseable {
             }
 
             int rowsAffected = preparedStatement.executeUpdate();
-            return rowsAffected > 0;
+
+            // Vérifiez s'il y a une clé générée
+            if (rowsAffected > 0) {
+                ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    // Récupérez la clé primaire générée (peut être int ou String)
+                    String generatedKey = generatedKeys.getString(1); // Vous pouvez utiliser getInt(1) si c'est un int
+                    return generatedKey;
+                }
+            }
         } catch (SQLException e) {
             throw e;
         }
+        return null; // Retourne null si l'insertion a échoué ou s'il n'y a pas de clé primaire générée
     }
 
+
+    @Override
     public Map<String, String> read(String[] ids) {
         try {
-            // Construisez la clause WHERE en fonction des clés primaires
             StringBuilder whereClause = new StringBuilder();
             for (int i = 0; i < _primaryKey.length; i++) {
                 whereClause.append(_primaryKey[i]).append(" = ?");
@@ -123,7 +134,6 @@ public class db implements AutoCloseable {
 
             String query = "SELECT * FROM " + this._table + " WHERE " + whereClause.toString();
 
-            // Ajoutez la condition pour le soft delete si _softDelete est true
             if (this._softDelete) {
                 query += " AND delete_at IS NULL";
             }
@@ -138,9 +148,6 @@ public class db implements AutoCloseable {
 
             if (resultSet.next()) {
                 Map<String, String> rowData = new HashMap<>();
-
-                // Remplir la map avec les données de la ligne
-                // Utilisez resultSet.getString("nom_de_la_colonne") pour récupérer les valeurs
 
                 ResultSetMetaData metaData = resultSet.getMetaData();
                 int columnCount = metaData.getColumnCount();
@@ -158,6 +165,7 @@ public class db implements AutoCloseable {
         return null;
     }
 
+    @Override
     public Map<String, String> read(String columnName, String value) {
         try {
             String query = "SELECT * FROM " + this._table + " WHERE " + columnName + " = ?";
@@ -194,6 +202,29 @@ public class db implements AutoCloseable {
         return null;
     }
 
+    public int getColumnCount(String WhereColumnName, String value) {
+        System.out.println(this._softDelete);
+        try {
+            String query = "SELECT count(*) AS count FROM " + this._table + " WHERE " + WhereColumnName + " = ?";
+
+            if (this._softDelete) {
+                query += " AND delete_at IS NULL";
+            }
+
+            PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+            preparedStatement.setString(1, value);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt("count");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 
 
     public List<Map<String, String>> readAll(String columnName, String value) {
@@ -201,7 +232,6 @@ public class db implements AutoCloseable {
         try {
             String query = "SELECT * FROM " + this._table + " WHERE " + columnName + " = ?";
 
-            // Ajoutez la condition pour le soft delete si _softDelete est true
             if (this._softDelete) {
                 query += " AND delete_at IS NULL";
             }
@@ -233,7 +263,6 @@ public class db implements AutoCloseable {
     public List<Map<String, String>> readAll(String[] ids) {
         List<Map<String, String>> resultList = new ArrayList<>();
         try {
-            // Construisez la clause WHERE en fonction des clés primaires
             StringBuilder whereClause = new StringBuilder();
             for (int i = 0; i < _primaryKey.length; i++) {
                 whereClause.append(_primaryKey[i]).append(" = ?");
@@ -244,7 +273,6 @@ public class db implements AutoCloseable {
 
             String query = "SELECT * FROM " + this._table + " WHERE " + whereClause.toString();
 
-            // Ajoutez la condition pour le soft delete si _softDelete est true
             if (this._softDelete) {
                 query += " AND delete_at IS NULL";
             }
@@ -277,16 +305,15 @@ public class db implements AutoCloseable {
     }
 
 
+    @Override
     public boolean update(Map<String, String> data,String[] ids) {
         try {
-            // Construisez la clause SET pour la mise à jour
             StringBuilder setClause = new StringBuilder();
             for (Map.Entry<String, String> entry : data.entrySet()) {
                 setClause.append(entry.getKey()).append(" = ?,");
             }
-            setClause.setLength(setClause.length() - 1); // Supprimer la virgule finale
+            setClause.setLength(setClause.length() - 1);
 
-            // Construisez la clause WHERE en fonction des clés primaires
             StringBuilder whereClause = new StringBuilder();
             for (int i = 0; i < _primaryKey.length; i++) {
                 whereClause.append(_primaryKey[i]).append(" = ?");
@@ -298,13 +325,11 @@ public class db implements AutoCloseable {
             String query = "UPDATE " + _table + " SET " + setClause.toString() + " WHERE " + whereClause.toString();
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
 
-            // Définissez les nouvelles valeurs
             int index = 1;
             for (String value : data.values()) {
                 preparedStatement.setString(index++, value);
             }
 
-            // Définissez les valeurs des clés primaires
             for (String id : ids) {
                 preparedStatement.setString(index++, id);
             }
@@ -317,9 +342,9 @@ public class db implements AutoCloseable {
         }
     }
 
+    @Override
     public boolean delete(String[] ids) {
         try {
-            // Construisez la clause WHERE en fonction des clés primaires
             StringBuilder whereClause = new StringBuilder();
             for (int i = 0; i < _primaryKey.length; i++) {
                 whereClause.append(_primaryKey[i]).append(" = ?");
@@ -331,7 +356,6 @@ public class db implements AutoCloseable {
             String query = "DELETE FROM " + _table + " WHERE " + whereClause.toString();
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
 
-            // Définissez les valeurs des clés primaires
             for (int i = 0; i < ids.length; i++) {
                 preparedStatement.setString(i + 1, ids[i]);
             }
@@ -346,10 +370,8 @@ public class db implements AutoCloseable {
 
     public boolean softDelete(String[] ids) {
         try {
-            StringBuilder setClause = new StringBuilder();
-            setClause.append("delete_at = ?");
 
-            String query = "UPDATE " + _table + " SET " + setClause.toString() + " WHERE ";
+            String query = "UPDATE " + _table + " SET " + "delete_at = ?" + " WHERE ";
 
             StringBuilder whereClause = new StringBuilder();
             for (int i = 0; i < _primaryKey.length; i++) {

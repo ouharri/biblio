@@ -1,9 +1,15 @@
 package com.biblio.dao;
 
-import com.biblio.libs.db;
+import com.biblio.app.model.User;
 
-public class UserDao extends db {
-    public UserDao() {
-        super("users", new String[]{"id"});
+import java.sql.SQLException;
+
+public class UserDao extends User {
+
+
+    public boolean create() throws SQLException {
+        this.id = Integer.parseInt(super.create(this.getUser()));
+        return this.id > 0;
     }
+
 }

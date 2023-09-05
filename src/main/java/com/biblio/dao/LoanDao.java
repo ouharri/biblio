@@ -1,9 +1,14 @@
 package com.biblio.dao;
 
-import com.biblio.libs.db;
+import com.biblio.app.model.Loan;
 
-public class LoanDao extends db {
-    public LoanDao() {
-        super("loans", new String[]{"id"});
+import java.sql.SQLException;
+
+public class LoanDao extends Loan {
+
+    public boolean create() throws SQLException {
+        return super.create(this.getLoan()) != null;
     }
+
+
 }

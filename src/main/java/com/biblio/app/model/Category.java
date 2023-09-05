@@ -1,12 +1,15 @@
-package com.biblio.model;
+package com.biblio.app.model;
 
-import com.biblio.dao.CategoryDao;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
+import com.biblio.libs.db;
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Category extends CategoryDao {
+public abstract class Category extends db {
+
+	public Category() {
+		super("categories", new String[]{"id"});
+	}
 
 	private int id;
 	private Book[] book = null;

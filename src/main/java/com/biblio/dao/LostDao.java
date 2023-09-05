@@ -1,9 +1,7 @@
 package com.biblio.dao;
 
-import com.biblio.libs.db;
+import com.biblio.app.model.Lost;
 
-public class LostDao extends db {
-    public LostDao() {
-        super("losts", new String[]{"id"});
-    }
+public class LostDao extends Lost {
+
 }

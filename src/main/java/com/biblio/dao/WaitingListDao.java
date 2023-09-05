@@ -1,9 +1,7 @@
 package com.biblio.dao;
 
-import com.biblio.libs.db;
+import com.biblio.app.model.WaitingList;
 
-public class WaitingListDao extends db {
-    public WaitingListDao() {
-        super("waitinglists", new String[]{"id"});
-    }
+public class WaitingListDao extends WaitingList{
+
 }

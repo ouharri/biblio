@@ -1,9 +1,7 @@
 package com.biblio.dao;
 
-import com.biblio.libs.db;
+import com.biblio.app.model.Log;
 
-public class LogDao extends db {
-    public LogDao() {
-        super("logs", new String[]{"id"});
-    }
+public class LogDao extends Log {
+
 }

@@ -4,23 +4,46 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="974a4e58-64ac-46a1-b270-b71322b9e800" name="Changes" comment="L-2 migrate to javaFX">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+    <list default="true" id="974a4e58-64ac-46a1-b270-b71322b9e800" name="Changes" comment="L-2 impement interface and abstract class">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/Author.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/Book.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/Loan.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/biblio/interfaces/CRUD.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/dao/AuthorDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/dao/AuthorDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/dao/BookDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/dao/BookDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/dao/BooksAuthorsDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/dao/BooksAuthorsDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/dao/CategorieBookDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/dao/CategorieBookDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/dao/CategoryDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/dao/CategoryDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/dao/LoanDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/dao/LoanDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/dao/LogDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/dao/LogDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/dao/LostDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/dao/LostDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/dao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/dao/UserDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/dao/WaitingListDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/dao/WaitingListDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/libs/db.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/libs/db.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/Author.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/Author.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/Book.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/model/Category.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/Author.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/Book.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/Category.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/Loans.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/Log.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/Log.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/Lost.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/Lost.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/model/waitingList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/WaitingList.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -38,6 +61,7 @@
     "WebServerToolWindowFactoryState": "false",
     "dart.analysis.tool.window.visible": "false",
     "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "C:/proj/biblio/assets",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -45,9 +69,9 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
+    "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "reference.settings.ide.settings.uml",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -72,7 +96,8 @@
       <option name="presentableId" value="Default" />
       <updated>1693863773992</updated>
       <workItem from="1693863776305" duration="2672000" />
-      <workItem from="1693869703177" duration="16527000" />
+      <workItem from="1693869703177" duration="20518000" />
+      <workItem from="1693912003675" duration="10049000" />
     </task>
     <task id="LOCAL-00001" summary="L-2 migrate to javaFX">
       <created>1693864551197</created>
@@ -88,7 +113,14 @@
       <option name="project" value="LOCAL" />
       <updated>1693870009926</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="L-2 migrate to javaFX">
+      <created>1693907372951</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1693907372951</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -96,6 +128,11 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="L-2 migrate to javaFX" />
-    <option name="LAST_COMMIT_MESSAGE" value="L-2 migrate to javaFX" />
+    <MESSAGE value="L-2 impement interface and abstract class" />
+    <option name="LAST_COMMIT_MESSAGE" value="L-2 impement interface and abstract class" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
