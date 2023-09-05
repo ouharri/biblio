@@ -1,11 +1,16 @@
 package com.biblio.app.model;
 
-import com.biblio.dao.UserDao;
+import com.biblio.dao.RoleDao;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import com.biblio.libs.db;
 
+import org.mindrot.jbcrypt.BCrypt;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Data
@@ -25,6 +30,8 @@ public abstract class User extends db {
 	public String password;
 	public java.sql.Timestamp delete_at = null;
 
+	protected Role[] roles = null;
+
 	public Map<String, String> getUser(){
 		Map<String, String> UserData = new HashMap<>();
 		UserData.put("firstName", this.firstName);
@@ -40,12 +47,37 @@ public abstract class User extends db {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.password = password;
 		this.gender = gender;
 		this.phone = phone;
+		this.password = password;
+	}
+
+	public String hashPassword(String plainTextPassword) {
+		String salt = BCrypt.gensalt();
+		return BCrypt.hashpw(plainTextPassword, salt);
+	}
+
+	public boolean checkPassword(String plainTextPassword, String hashedPassword) {
+		return BCrypt.checkpw(plainTextPassword, hashedPassword);
+	}
+
+
+	public void hasRoles(Role[] roles) {
+		this.roles = roles;
 	}
 
 
 
 
+	public abstract boolean create() throws SQLException;
+
+	public abstract User read();
+
+	public abstract User getUserWithRoles();
+
+	public abstract User getByEmailWithRoles();
+
+	public abstract boolean update() throws SQLException;
+
+	public abstract boolean delete();
 }

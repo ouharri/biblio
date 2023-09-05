@@ -28,4 +28,10 @@ public abstract class Author extends db {
 	public abstract boolean update() throws SQLException;
 
 	public abstract boolean delete();
+
+	public void setAuthor(int id,String authorFirstName, String authorLastName) {
+		this.id = id;
+		this.firstName = authorFirstName;
+		this.lastName = authorLastName;
+	}
 }

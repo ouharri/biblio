@@ -54,7 +54,6 @@ public class BookDao extends Book {
             List<Author> authors = new ArrayList<>();
             List<Category> categories = new ArrayList<>();
 
-            System.out.println(resultSet.toString());
             while (resultSet.next()) {
                 if(flag){
                     this.setBook(
@@ -75,9 +74,11 @@ public class BookDao extends Book {
 
                 if (authorFirstName != null && authorLastName != null && authorId != 0) {
                     Author author = (Author) new AuthorDao();
-                    author.setId(authorId);
-                    author.setFirstName(authorFirstName);
-                    author.setLastName(authorLastName);
+                    author.setAuthor(
+                            authorId,
+                            authorFirstName,
+                            authorLastName
+                    );
                     authors.add(author);
                 }
 
@@ -103,7 +104,6 @@ public class BookDao extends Book {
     }
 
     public Book read() {
-        System.out.println(this.isbn);
         Map<String, String> Book = super.read(new String[]{this.isbn});
 
         System.out.println(Book.toString());

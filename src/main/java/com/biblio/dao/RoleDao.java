@@ -1,10 +1,7 @@
 package com.biblio.dao;
 
-import com.biblio.libs.db;
+import com.biblio.app.model.Role;
 
-public class RoleDao extends db {
+public class RoleDao extends Role {
 
-        public RoleDao() {
-            super("roles", new String[]{"id"});
-        }
 }

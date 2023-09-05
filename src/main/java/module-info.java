@@ -11,6 +11,7 @@ module com.biblio {
 //            requires eu.hansolo.tilesfx;
     requires java.sql;
     requires lombok;
+    requires jBCrypt;
 
     opens com.biblio to javafx.fxml;
     exports com.biblio;
