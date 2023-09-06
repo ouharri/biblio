@@ -44,11 +44,11 @@ public class UserDao extends User {
     public User getUserWithRoles() {
         boolean flag = true;
         try {
-            String query = "SELECT u.*, r.role " +
+            String query = "SELECT u.*, r.role, r.id r_id " +
                     "FROM users u " +
                     "LEFT JOIN users_roles ur ON u.id = ur.user " +
                     "LEFT JOIN roles r ON ur.role = r.id " +
-                    "WHERE u.id = ?";
+                    "WHERE u.id = ? AND u.delete_at IS NULL";
 
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
             preparedStatement.setInt(1, this.id);
@@ -70,17 +70,18 @@ public class UserDao extends User {
                     flag = false;
                 }
 
-                int id = resultSet.getInt("id");
+                int id = resultSet.getInt("r_id");
                 String roleTitle = resultSet.getString("role");
 
+                System.out.println(id + " " + roleTitle);
+
                 if (roleTitle != null && id > 0) {
-                    try(Role role = (Role) new RoleDao()){
+                    Role role = (Role) new RoleDao();
                         role.setRole(
                                 id,
                                 roleTitle
                         );
                         roles.add(role);
-                    }
                 }
             }
 
@@ -93,16 +94,14 @@ public class UserDao extends User {
         return this;
     }
 
-
     public User getByEmailWithRoles() {
+        boolean flag = true;
         try {
-            boolean flag = true;
-
             String query = "SELECT u.*, r.role " +
                     "FROM users u " +
                     "LEFT JOIN users_roles ur ON u.id = ur.user " +
                     "LEFT JOIN roles r ON ur.role = r.id " +
-                    "WHERE u.email = ?";
+                    "WHERE u.email = ? AND u.delete_at IS NULL";
 
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
             preparedStatement.setString(1, this.email);
@@ -112,16 +111,14 @@ public class UserDao extends User {
 
             while (resultSet.next()) {
                 if (flag) {
-                    try(User user = new UserDao()) {
-                        user.setId(resultSet.getInt("id"));
-                        user.setFirstName(resultSet.getString("firstName"));
-                        user.setLastName(resultSet.getString("lastName"));
-                        user.setEmail(resultSet.getString("email"));
-                        user.setPhone(resultSet.getString("phone"));
-                        user.setGender(resultSet.getString("gender"));
-                        user.setPassword(resultSet.getString("password"));
-                        user.setDelete_at(resultSet.getTimestamp("delete_at"));
-                    }
+                    this.setUser(
+                            resultSet.getString("firstName"),
+                            resultSet.getString("lastName"),
+                            resultSet.getString("email"),
+                            resultSet.getString("password"),
+                            resultSet.getString("gender"),
+                            resultSet.getString("phone")
+                    );
                     flag = false;
                 }
 
@@ -129,14 +126,12 @@ public class UserDao extends User {
                 String roleTitle = resultSet.getString("role");
 
                 if (roleTitle != null && id > 0) {
-                    try(Role role = (Role) new RoleDao()){
-                        role.setRole(
-                                id,
-                                roleTitle
-                        );
-                        roles.add(role);
-                    }
-
+                    Role role = (Role) new RoleDao();
+                    role.setRole(
+                            id,
+                            roleTitle
+                    );
+                    roles.add(role);
                 }
             }
 
@@ -157,7 +152,7 @@ public class UserDao extends User {
                     "FROM users u " +
                     "LEFT JOIN users_roles ur ON u.id = ur.user " +
                     "LEFT JOIN roles r ON ur.role = r.id " +
-                    "WHERE u.phone = ?";
+                    "WHERE u.phone = ? AND u.delete_at IS NULL";
 
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
             preparedStatement.setString(1, this.phone);
@@ -167,16 +162,14 @@ public class UserDao extends User {
 
             while (resultSet.next()) {
                 if (flag) {
-                    try(User user = new UserDao()) {
-                        user.setId(resultSet.getInt("id"));
-                        user.setFirstName(resultSet.getString("firstName"));
-                        user.setLastName(resultSet.getString("lastName"));
-                        user.setEmail(resultSet.getString("email"));
-                        user.setPhone(resultSet.getString("phone"));
-                        user.setGender(resultSet.getString("gender"));
-                        user.setPassword(resultSet.getString("password"));
-                        user.setDelete_at(resultSet.getTimestamp("delete_at"));
-                    }
+                    this.setUser(
+                            resultSet.getString("firstName"),
+                            resultSet.getString("lastName"),
+                            resultSet.getString("email"),
+                            resultSet.getString("password"),
+                            resultSet.getString("gender"),
+                            resultSet.getString("phone")
+                    );
                     flag = false;
                 }
 
@@ -184,14 +177,12 @@ public class UserDao extends User {
                 String roleTitle = resultSet.getString("role");
 
                 if (roleTitle != null && id > 0) {
-                    try(Role role = (Role) new RoleDao()){
-                        role.setRole(
-                                id,
-                                roleTitle
-                        );
-                        roles.add(role);
-                    }
-
+                    Role role = (Role) new RoleDao();
+                    role.setRole(
+                            id,
+                            roleTitle
+                    );
+                    roles.add(role);
                 }
             }
 

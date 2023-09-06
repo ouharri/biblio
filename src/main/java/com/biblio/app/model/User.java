@@ -1,21 +1,18 @@
 package com.biblio.app.model;
 
-import com.biblio.dao.RoleDao;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import com.biblio.libs.db;
+import com.biblio.libs.Model;
 
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public abstract class User extends db {
+public abstract class User extends Model {
 
 	public User() {
 		super("users", new String[]{"id"});
@@ -50,15 +47,6 @@ public abstract class User extends db {
 		this.gender = gender;
 		this.phone = phone;
 		this.password = password;
-	}
-
-	public String hashPassword(String plainTextPassword) {
-		String salt = BCrypt.gensalt();
-		return BCrypt.hashpw(plainTextPassword, salt);
-	}
-
-	public boolean checkPassword(String plainTextPassword, String hashedPassword) {
-		return BCrypt.checkpw(plainTextPassword, hashedPassword);
 	}
 
 

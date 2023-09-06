@@ -1,12 +1,6 @@
 package com.biblio;
 
-import com.biblio.dao.BookDao;
-import com.biblio.dao.LoanDao;
-import com.biblio.dao.UserDao;
-import com.biblio.app.model.Book;
-import com.biblio.app.model.User;
-
-import java.sql.SQLException;
+import com.biblio.app.controller.AuthenticationController;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -19,12 +13,21 @@ public class App {
 
 
 
-        try(User user = new UserDao()){
-            user.setId(1);
-            user.getUserWithRoles();
-            System.out.println(user.toString());
-        }
+//        UserDao user = new UserDao();
+//            user.setEmail("ouharrioutman@gmail.com");
+//            System.out.println( ((User)user.getByEmailWithRoles()).toString() );
 
+
+        AuthenticationController user = new AuthenticationController();
+
+        if(user.authenticateUser(
+                "483957485",
+                "687674987398749"
+        )){
+            System.out.println("L'utilisateur a été inséré avec succès !");
+        } else {
+            System.out.println("Erreur lors de l'insertion de l'utilisateur.");
+        }
 
 
 
@@ -46,13 +49,13 @@ public class App {
 //                System.out.println("Erreur lors de l'insertion de l'utilisateur.");
 //            }
 //
-//            book = new BookDao();
+//            BookDao book = new BookDao();
 //
 //            LoanDao loan = new LoanDao();
 //
 //            book.setIsbn("90");
 //
-//            book.read();
+//            book.getBookWithDetails();
 //
 //            loan.setLoan(
 //                    (Book) book,
@@ -66,7 +69,7 @@ public class App {
 //            }
 //
 //
-////            System.out.println(((Book)book.getBookWithDetails()).toString());
+//         System.out.println(((Book)book.getBookWithDetails()).toString());
 //
 ////            if (book.delete()) {
 ////                System.out.println("Le livre a été inséré avec succès !" + book.toString());

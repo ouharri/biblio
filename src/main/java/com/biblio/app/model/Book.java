@@ -7,11 +7,11 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.biblio.libs.db;
+import com.biblio.libs.Model;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public abstract class Book extends db {
+public abstract class Book extends Model {
 
 	public int quantities;
 	public int pages;

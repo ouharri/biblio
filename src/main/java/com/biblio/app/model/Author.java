@@ -5,11 +5,11 @@ import lombok.EqualsAndHashCode;
 
 import java.sql.SQLException;
 
-import com.biblio.libs.db;
+import com.biblio.libs.Model;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public abstract class Author extends db {
+public abstract class Author extends Model {
 
 	public int id;
 	private Book[] book = null;

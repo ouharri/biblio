@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class db implements AutoCloseable, CRUD {
+public class Model implements AutoCloseable, CRUD {
     protected Connection connection = null;
     protected String _table = null;
     protected String[] _primaryKey = {"id"};
@@ -17,7 +17,7 @@ public class db implements AutoCloseable, CRUD {
     protected Boolean _softDelete = true;
     private boolean inTransaction = false;
 
-    public db(String tableName, String[] primaryKey) {
+    public Model(String tableName, String[] primaryKey) {
         this.connection = database.getConnection();
         this._table = tableName;
         if (primaryKey != null && primaryKey.length > 0) {
@@ -105,19 +105,16 @@ public class db implements AutoCloseable, CRUD {
 
             int rowsAffected = preparedStatement.executeUpdate();
 
-            // Vérifiez s'il y a une clé générée
             if (rowsAffected > 0) {
                 ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
                 if (generatedKeys.next()) {
-                    // Récupérez la clé primaire générée (peut être int ou String)
-                    String generatedKey = generatedKeys.getString(1); // Vous pouvez utiliser getInt(1) si c'est un int
-                    return generatedKey;
+                    return generatedKeys.getString(1);
                 }
             }
         } catch (SQLException e) {
             throw e;
         }
-        return null; // Retourne null si l'insertion a échoué ou s'il n'y a pas de clé primaire générée
+        return null;
     }
 
 
@@ -224,8 +221,6 @@ public class db implements AutoCloseable, CRUD {
         }
         return 0;
     }
-
-
 
     public List<Map<String, String>> readAll(String columnName, String value) {
         List<Map<String, String>> resultList = new ArrayList<>();

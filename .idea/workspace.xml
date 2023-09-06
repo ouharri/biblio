@@ -5,19 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="974a4e58-64ac-46a1-b270-b71322b9e800" name="Changes" comment="L-2 impement interface and abstract class">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/controller/UserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/Role.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/controller/AnalysisController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/controller/AuthenticationController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/controller/BookController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/controller/BorrowController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/HelloApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/app/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/controller/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/Author.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/Author.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/Book.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/Category.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/Loan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/Loan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/Log.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/Log.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/Lost.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/Lost.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/Role.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/WaitingList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/WaitingList.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/dao/BookDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/dao/BookDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/dao/RoleDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/dao/RoleDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/dao/BooksAuthorsDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/dao/BooksAuthorsDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/dao/CategorieBookDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/dao/CategorieBookDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/dao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/dao/UserDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/dao/UserRoleDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/dao/UserRoleDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/interfaces/CRUD.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/interfaces/CRUD.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/libs/db.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/libs/Model.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +46,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="2Uww67VqEwCydExOtMWS6UGH8Md" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -85,7 +98,7 @@
       <updated>1693863773992</updated>
       <workItem from="1693863776305" duration="2672000" />
       <workItem from="1693869703177" duration="20518000" />
-      <workItem from="1693912003675" duration="27627000" />
+      <workItem from="1693912003675" duration="40765000" />
     </task>
     <task id="LOCAL-00001" summary="L-2 migrate to javaFX">
       <created>1693864551197</created>
@@ -115,7 +128,14 @@
       <option name="project" value="LOCAL" />
       <updated>1693926850609</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="L-2 impement interface and abstract class">
+      <created>1693955965522</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1693955965522</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

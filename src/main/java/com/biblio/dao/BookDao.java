@@ -35,10 +35,9 @@ public class BookDao extends Book {
     }
 
     public Book getBookWithDetails() {
-
         boolean flag = true;
         try {
-            String query = "SELECT b.isbn, b.quantities, b.pages, b.title, b.edition, b.language, b.description,a.id, a.firstName, a.lastName, c.category " +
+            String query = "SELECT b.isbn, b.quantities, b.pages, b.title, b.edition, b.language, b.description,a.id, a.firstName, a.lastName, c.category, c.description c_description " +
                     "FROM books b " +
                     "LEFT JOIN books_authors ba ON b.isbn = ba.book " +
                     "LEFT JOIN authors a ON ba.author = a.id " +
@@ -83,7 +82,7 @@ public class BookDao extends Book {
                 }
 
                 String categoryStr = resultSet.getString("category");
-                String categoryDescription = resultSet.getString("description");
+                String categoryDescription = resultSet.getString("c_description");
 
                 if (categoryStr != null) {
                     Category category = (Category) new CategoryDao();

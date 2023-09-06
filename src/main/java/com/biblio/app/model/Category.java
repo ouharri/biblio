@@ -2,10 +2,10 @@ package com.biblio.app.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import com.biblio.libs.db;
+import com.biblio.libs.Model;
 @Data
 @EqualsAndHashCode(callSuper = true)
-public abstract class Category extends db {
+public abstract class Category extends Model {
 
 	public Category() {
 		super("categories", new String[]{"id"});
