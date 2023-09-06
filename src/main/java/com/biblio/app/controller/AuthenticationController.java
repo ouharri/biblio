@@ -1,5 +1,6 @@
 package com.biblio.app.controller;
 
+import com.biblio.app.exceptions.existingUserException;
 import com.biblio.app.model.User;
 import com.biblio.dao.UserDao;
 import org.mindrot.jbcrypt.BCrypt;
@@ -14,11 +15,8 @@ public class AuthenticationController {
         this.userDao = new UserDao();
     }
 
-    public boolean registerUser(String firstName, String lastName, String email, String password, String gender, String phone) {
+    public boolean registerUser(String firstName, String lastName, String email, String password, String gender, String phone) throws existingUserException {
 
-//        if (userExists(email) || userExists(phone)) {
-//            return false;
-//        }
         userDao.setUser(
                 firstName,
                 lastName,
@@ -27,6 +25,10 @@ public class AuthenticationController {
                 gender,
                 phone
         );
+
+        if (this.userExists(email) || this.userExists(phone)) {
+            throw new existingUserException((User) this.userDao);
+        }
 
         try {
             return userDao.create();

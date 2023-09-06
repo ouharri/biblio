@@ -9,10 +9,11 @@ import com.biblio.libs.Model;
 @EqualsAndHashCode(callSuper = true)
 public abstract class Lost extends Model {
 
-	public int lostCount;
-	public Book book;
-	public java.sql.Date loastDate;
-	public String description;
+	protected int lostCount;
+	protected java.sql.Date loastDate;
+	protected String description;
+
+	protected Book book;
 
 	public Lost() {
 		super("losts", new String[]{"id"});

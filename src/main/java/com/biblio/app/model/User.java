@@ -7,7 +7,9 @@ import com.biblio.libs.Model;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Data
@@ -18,16 +20,18 @@ public abstract class User extends Model {
 		super("users", new String[]{"id"});
 	}
 
-	public int id;
-	public String firstName;
-	public String lastName;
-	public String email;
-	public String phone;
-	public String gender;
-	public String password;
-	public java.sql.Timestamp delete_at = null;
+	protected int id;
+	protected String firstName;
+	protected String lastName;
+	protected String email;
+	protected String phone;
+	protected String gender;
+	protected String password;
+	protected java.sql.Timestamp delete_at = null;
 
-	protected Role[] roles = null;
+	protected List<Role> roles = new ArrayList<Role>();
+	protected List<Loan> Loan = new ArrayList<Loan>();
+	protected List<Log> Log = new ArrayList<Log>();
 
 	public Map<String, String> getUser(){
 		Map<String, String> UserData = new HashMap<>();
@@ -49,12 +53,20 @@ public abstract class User extends Model {
 		this.password = password;
 	}
 
-
-	public void hasRoles(Role[] roles) {
-		this.roles = roles;
+	public void setUser(String id,String firstName, String lastName, String email, String password , String gender, String phone){
+		this.id = Integer.parseInt(id);
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.gender = gender;
+		this.phone = phone;
+		this.password = password;
 	}
 
 
+	public void hasRoles(List<Role> roles) {
+		this.roles = roles;
+	}
 
 
 	public abstract boolean create() throws SQLException;

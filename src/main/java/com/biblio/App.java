@@ -20,9 +20,13 @@ public class App {
 
         AuthenticationController user = new AuthenticationController();
 
-        if(user.authenticateUser(
-                "483957485",
-                "687674987398749"
+        if(user.registerUser(
+                "outman",
+                "ouharri",
+                "ouharrioutman@gmail.com",
+                "687674987398749",
+                "male",
+                "1234567890"
         )){
             System.out.println("L'utilisateur a été inséré avec succès !");
         } else {

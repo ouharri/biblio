@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class BookDao extends Book {
+public final class BookDao extends Book {
 
     public boolean save() throws SQLException {
         this.isbn = this.create(this.getBook());
@@ -92,8 +92,8 @@ public class BookDao extends Book {
                 }
             }
 
-            this.hasAuthors(authors.toArray(new Author[0]));
-            this.hasCategories(categories.toArray(new Category[0]));
+            this.hasAuthors(authors);
+            this.hasCategories(categories);
 
         } catch (SQLException e) {
             e.printStackTrace();

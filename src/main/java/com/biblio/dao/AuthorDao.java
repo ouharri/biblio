@@ -7,10 +7,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-public class AuthorDao extends Author {
+public final class AuthorDao extends Author {
 
     public Author[] getAuthorByBook(Book book) throws Exception {
-
 
         try(BooksAuthorsDao BooksAuthorsDao = new BooksAuthorsDao()){
             List<Map<String, String>> resultList = BooksAuthorsDao.readAll("book",book.getIsbn());

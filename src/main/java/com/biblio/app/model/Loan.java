@@ -18,12 +18,12 @@ public abstract class Loan extends Model {
 	}
 
 	protected int bookReference ;
+	protected java.sql.Timestamp loanDate;
+	protected java.sql.Timestamp expectedReturnDate = null;
+	protected java.sql.Timestamp returnDate = null;
+
 	protected Book book;
 	protected User user;
-
-	public java.sql.Timestamp loanDate;
-	public java.sql.Timestamp expectedReturnDate = null;
-	public java.sql.Timestamp returnDate = null;
 
 	public Map<String, String> getLoan(){
 		Map<String, String> LoanData = new HashMap<>();

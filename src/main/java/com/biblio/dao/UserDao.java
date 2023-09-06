@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class UserDao extends User {
+public final class UserDao extends User {
 
 
     public boolean create() throws SQLException {
@@ -85,7 +85,7 @@ public class UserDao extends User {
                 }
             }
 
-            this.hasRoles(roles.toArray(new Role[0]));
+            this.hasRoles(roles);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -135,7 +135,7 @@ public class UserDao extends User {
                 }
             }
 
-            this.hasRoles(roles.toArray(new Role[0]));
+            this.hasRoles(roles);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -186,7 +186,7 @@ public class UserDao extends User {
                 }
             }
 
-            this.hasRoles(roles.toArray(new Role[0]));
+            this.hasRoles(roles);
 
         } catch (Exception e) {
             e.printStackTrace();

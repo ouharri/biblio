@@ -8,10 +8,11 @@ import com.biblio.libs.Model;
 @EqualsAndHashCode(callSuper = true)
 public abstract class Log extends Model {
 
-	public int id;
-	public User user;
-	public Book book;
-	public java.sql.Timestamp create_at;
+	protected int id;
+	protected java.sql.Timestamp create_at;
+
+	protected User user;
+	protected Book book;
 
 	public Log() {
 		super("logs", new String[]{"id"});

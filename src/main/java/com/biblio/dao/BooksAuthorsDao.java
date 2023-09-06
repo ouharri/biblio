@@ -2,7 +2,7 @@ package com.biblio.dao;
 
 import com.biblio.libs.Model;
 
-public class BooksAuthorsDao extends Model {
+public final class BooksAuthorsDao extends Model {
 
 
     public BooksAuthorsDao() {

@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import com.biblio.libs.Model;
 
@@ -11,15 +12,19 @@ import com.biblio.libs.Model;
 @EqualsAndHashCode(callSuper = true)
 public abstract class Author extends Model {
 
-	public int id;
-	private Book[] book = null;
-	public String firstName;
-	public String lastName;
+	protected int id;
+	protected String firstName;
+	protected String lastName;
+
+	protected List<Book> book = null;
 
 	public Author() {
 		super("authors", new String[]{"id"});
 	}
 
+	public void hasBooks(List<Book> book) {
+		this.book = book;
+	}
 
 	public abstract boolean create() throws SQLException;
 

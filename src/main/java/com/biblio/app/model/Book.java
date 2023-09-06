@@ -4,7 +4,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.biblio.libs.Model;
@@ -13,17 +15,18 @@ import com.biblio.libs.Model;
 @EqualsAndHashCode(callSuper = true)
 public abstract class Book extends Model {
 
-	public int quantities;
-	public int pages;
-	public String isbn;
-	public String title;
-	public String edition;
-	public String language;
-	public String description;
-	public java.sql.Timestamp delete_at;
+	protected int quantities;
+	protected int pages;
+	protected String isbn;
+	protected String title;
+	protected String edition;
+	protected String language;
+	protected String description;
+	protected java.sql.Timestamp delete_at;
 
-	public Category[] category;
-	public Author[] author;
+	protected List<Category> categories = new ArrayList<Category>();
+	protected List<Author> authors = new ArrayList<Author>();
+	protected List<WaitingList> waitingLists = new ArrayList<WaitingList>();
 
 	public Book() {
 		super("books",new String[]{"isbn"});
@@ -51,12 +54,12 @@ public abstract class Book extends Model {
 		return bookData;
 	}
 
-	public void hasAuthors(Author[] authors) {
-		this.author = authors;
+	public void hasAuthors(List<Author> authors) {
+		this.authors = authors;
 	}
 
-	public void hasCategories(Category[] categories) {
-		this.category = categories;
+	public void hasCategories(List<Category> categories) {
+		this.categories = categories;
 	}
 
 	public abstract boolean create() throws SQLException;
