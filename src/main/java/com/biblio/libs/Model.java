@@ -25,13 +25,13 @@ public class Model implements AutoCloseable, CRUD {
         }
     }
 
+
     public void beginTransaction() throws SQLException {
         if (!inTransaction) {
             this.connection.setAutoCommit(false);
             this.inTransaction = true;
         }
     }
-
     public void commitTransaction() throws SQLException {
         if (inTransaction) {
             this.connection.commit();
@@ -39,7 +39,6 @@ public class Model implements AutoCloseable, CRUD {
             this.inTransaction = false;
         }
     }
-
     public void rollbackTransaction() throws SQLException {
         if (inTransaction) {
             this.connection.rollback();
@@ -48,12 +47,12 @@ public class Model implements AutoCloseable, CRUD {
         }
     }
 
+
     public List<Map<String, String>> getAll() {
         List<Map<String, String>> resultList = new ArrayList<>();
         try {
             String query = "SELECT * FROM " + this._table;
 
-            // Ajoutez la condition pour le soft delete si _softDelete est true
             if (this._softDelete) {
                 query += " WHERE delete_at IS NULL";
             }
@@ -79,45 +78,86 @@ public class Model implements AutoCloseable, CRUD {
         }
         return resultList;
     }
+    public List<Map<String, String>> search(String keyword, String[] columns) {
+        List<Map<String, String>> resultList = new ArrayList<>();
+        try {
+            StringBuilder queryBuilder = new StringBuilder();
+            queryBuilder.append("SELECT * FROM ").append(this._table).append(" WHERE ");
 
+            if (this._softDelete) {
+                queryBuilder.append("delete_at IS NULL AND (");
+            } else {
+                queryBuilder.append("(");
+            }
+
+            for (int i = 0; i < columns.length; i++) {
+                queryBuilder.append(columns[i]).append(" LIKE ?");
+                if (i < columns.length - 1) {
+                    queryBuilder.append(" OR ");
+                }
+            }
+            queryBuilder.append(")");
+
+            PreparedStatement preparedStatement = this.connection.prepareStatement(queryBuilder.toString());
+
+            for (int i = 0; i < columns.length; i++) {
+                preparedStatement.setString(i + 1, "%" + keyword + "%");
+            }
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            ResultSetMetaData metaData = resultSet.getMetaData();
+            int columnCount = metaData.getColumnCount();
+
+            while (resultSet.next()) {
+                Map<String, String> rowData = new HashMap<>();
+
+                for (int i = 1; i <= columnCount; i++) {
+                    String columnName = metaData.getColumnName(i);
+                    rowData.put(columnName, resultSet.getString(columnName));
+                }
+
+                resultList.add(rowData);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultList;
+    }
 
     @Override
     public String create(Map<String, String> data) throws SQLException {
-        try {
-            StringBuilder columns = new StringBuilder();
-            StringBuilder values = new StringBuilder();
+        StringBuilder columns = new StringBuilder();
+        StringBuilder values = new StringBuilder();
 
-            for (Map.Entry<String, String> entry : data.entrySet()) {
-                columns.append(entry.getKey()).append(",");
-                values.append("?").append(",");
+        for (Map.Entry<String, String> entry : data.entrySet()) {
+            columns.append(entry.getKey()).append(",");
+            values.append("?").append(",");
+        }
+
+        columns.setLength(columns.length() - 1);
+        values.setLength(values.length() - 1);
+
+        String query = "INSERT INTO " + _table + " (" + columns.toString() + ") VALUES (" + values.toString() + ")";
+        PreparedStatement preparedStatement = this.connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+
+        int index = 1;
+        for (String value : data.values()) {
+            preparedStatement.setString(index++, value);
+        }
+
+        int rowsAffected = preparedStatement.executeUpdate();
+
+        if (rowsAffected > 0) {
+            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                return generatedKeys.getString(1);
+            } else {
+                return data.get(this._primaryKey[0]);
             }
-
-            columns.setLength(columns.length() - 1);
-            values.setLength(values.length() - 1);
-
-            String query = "INSERT INTO " + _table + " (" + columns.toString() + ") VALUES (" + values.toString() + ")";
-            PreparedStatement preparedStatement = this.connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-
-            int index = 1;
-            for (String value : data.values()) {
-                preparedStatement.setString(index++, value);
-            }
-
-            int rowsAffected = preparedStatement.executeUpdate();
-
-            if (rowsAffected > 0) {
-                ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-                if (generatedKeys.next()) {
-                    return generatedKeys.getString(1);
-                }
-            }
-        } catch (SQLException e) {
-            throw e;
         }
         return null;
     }
-
-
     @Override
     public Map<String, String> read(String[] ids) {
         try {
@@ -161,13 +201,11 @@ public class Model implements AutoCloseable, CRUD {
         }
         return null;
     }
-
     @Override
     public Map<String, String> read(String columnName, String value) {
         try {
             String query = "SELECT * FROM " + this._table + " WHERE " + columnName + " = ?";
 
-            // Ajoutez la condition pour le soft delete si _softDelete est true
             if (this._softDelete) {
                 query += " AND delete_at IS NULL";
             }
@@ -198,7 +236,6 @@ public class Model implements AutoCloseable, CRUD {
         }
         return null;
     }
-
     public int getColumnCount(String WhereColumnName, String value) {
         System.out.println(this._softDelete);
         try {
@@ -221,7 +258,6 @@ public class Model implements AutoCloseable, CRUD {
         }
         return 0;
     }
-
     public List<Map<String, String>> readAll(String columnName, String value) {
         List<Map<String, String>> resultList = new ArrayList<>();
         try {
@@ -254,7 +290,6 @@ public class Model implements AutoCloseable, CRUD {
         }
         return resultList;
     }
-
     public List<Map<String, String>> readAll(String[] ids) {
         List<Map<String, String>> resultList = new ArrayList<>();
         try {
@@ -336,14 +371,17 @@ public class Model implements AutoCloseable, CRUD {
             return false;
         }
     }
-
     @Override
     public boolean delete(String[] ids) {
         try {
             StringBuilder whereClause = new StringBuilder();
-            for (int i = 0; i < _primaryKey.length; i++) {
+
+            int ids_length = ids.length;
+            int primaryKey_length = _primaryKey.length;
+
+            for (int i = 0; i < ids_length && i < primaryKey_length; i++) {
                 whereClause.append(_primaryKey[i]).append(" = ?");
-                if (i < _primaryKey.length - 1) {
+                if (i < ids_length - 1 && i < primaryKey_length - 1) {
                     whereClause.append(" AND ");
                 }
             }
@@ -351,7 +389,7 @@ public class Model implements AutoCloseable, CRUD {
             String query = "DELETE FROM " + _table + " WHERE " + whereClause.toString();
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
 
-            for (int i = 0; i < ids.length; i++) {
+            for (int i = 0; i < ids_length && i < primaryKey_length; i++) {
                 preparedStatement.setString(i + 1, ids[i]);
             }
 
@@ -397,12 +435,12 @@ public class Model implements AutoCloseable, CRUD {
 
     @Override
     public void close() throws Exception {
-        if (this.connection != null) {
-            try {
-                this.connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+//        if (this.connection != null) {
+//            try {
+//                this.connection.close();
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 }

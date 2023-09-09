@@ -1,7 +1,12 @@
 package com.biblio.dao;
 
-import com.biblio.app.model.Role;
+import com.biblio.app.Models.Role;
+import com.biblio.libs.Model;
 
-public final class RoleDao extends Role {
+public final class RoleDao extends Model {
+
+    public RoleDao() {
+        super("roles", new String[]{"id"});
+    }
 
 }

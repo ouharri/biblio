@@ -1,4 +1,4 @@
-package com.biblio.app.controller;
+package com.biblio.app.Controllers;
 
 public class AnalysisController {
 }

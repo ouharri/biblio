@@ -1,5 +1,6 @@
-package com.biblio.app.model;
+package com.biblio.app.Models;
 
+import com.biblio.app.Enums.Language;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -9,30 +10,32 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.biblio.libs.Model;
-
 @Data
-@EqualsAndHashCode(callSuper = true)
-public abstract class Book extends Model {
+@EqualsAndHashCode(callSuper = false)
+public class Book {
 
 	protected int quantities;
 	protected int pages;
 	protected String isbn;
 	protected String title;
 	protected String edition;
-	protected String language;
+	protected Language language;
 	protected String description;
 	protected java.sql.Timestamp delete_at;
 
 	protected List<Category> categories = new ArrayList<Category>();
 	protected List<Author> authors = new ArrayList<Author>();
+
+	protected List<Loan> loans = new ArrayList<Loan>();
+	protected List<Lost> Losts = new ArrayList<Lost>();
+
 	protected List<WaitingList> waitingLists = new ArrayList<WaitingList>();
+	protected List<Log> logs = new ArrayList<Log>();
 
-	public Book() {
-		super("books",new String[]{"isbn"});
-	}
 
-	public void setBook(String isbn, int quantities, int pages, String title, String edition, String language, String description) {
+
+
+	public void setBook(String isbn, int quantities, int pages, String title, String edition, Language language, String description) {
 		this.isbn = isbn;
 		this.quantities = quantities;
 		this.pages = pages;
@@ -49,10 +52,12 @@ public abstract class Book extends Model {
 		bookData.put("pages", String.valueOf(this.pages));
 		bookData.put("title", this.title);
 		bookData.put("edition", this.edition);
-		bookData.put("language", this.language);
+		bookData.put("language", this.language.toString());
 		bookData.put("description", this.description);
 		return bookData;
 	}
+
+
 
 	public void hasAuthors(List<Author> authors) {
 		this.authors = authors;
@@ -62,11 +67,21 @@ public abstract class Book extends Model {
 		this.categories = categories;
 	}
 
-	public abstract boolean create() throws SQLException;
+	public void hasWaitingLists(List<WaitingList> waitingLists) {
+		this.waitingLists = waitingLists;
+	}
 
-	public abstract Book read();
+	public void hasLoans(List<Loan> loans) {
+		this.loans = loans;
+	}
 
-	public abstract boolean update() throws SQLException;
+	public void hasLosts(List<Lost> Losts) {
+		this.Losts = Losts;
+	}
 
-	public abstract boolean delete();
+	public void hasLogs(List<Log> logs) {
+		this.logs = logs;
+	}
+
+
 }

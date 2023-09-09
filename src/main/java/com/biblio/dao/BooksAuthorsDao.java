@@ -6,7 +6,7 @@ public final class BooksAuthorsDao extends Model {
 
 
     public BooksAuthorsDao() {
-        super("books_authors",new String[]{"id"});
+        super("books_authors",new String[]{"book","author"});
         this._softDelete = false;
     }
 }

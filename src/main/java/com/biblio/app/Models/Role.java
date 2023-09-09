@@ -1,4 +1,4 @@
-package com.biblio.app.model;
+package com.biblio.app.Models;
 
 import com.biblio.libs.Model;
 import lombok.Data;
@@ -8,11 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@EqualsAndHashCode(callSuper = true)
-public abstract class Role extends Model {
-    public Role() {
-        super("roles", new String[]{"id"});
-    }
+@EqualsAndHashCode(callSuper = false)
+public class Role{
 
     protected int id;
     protected String role;

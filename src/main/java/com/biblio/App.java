@@ -1,9 +1,29 @@
 package com.biblio;
 
-import com.biblio.app.controller.AuthenticationController;
+import com.biblio.app.Controllers.AuthenticationController;
+import com.biblio.app.Controllers.BookController;
+import com.biblio.app.Controllers.LoanController;
+import com.biblio.app.Enums.Gender;
+import com.biblio.app.Enums.Language;
+import com.biblio.core.database;
 
-public class App {
+import java.sql.Connection;
+import java.sql.SQLException;
+
+public class App implements AutoCloseable{
+
+    private Connection connection = null;
+
+    public App() {
+        try {
+            this.connection = database.getConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) throws Exception {
+
 
 
 //        BookDao book = new BookDao();
@@ -11,6 +31,23 @@ public class App {
 //
 //        book.read();
 
+        BookController book = new BookController();
+
+//        System.out.println(book.updateBook(
+//                "278s2vf0",
+//                "Le titre du livre djjdn N",
+//                "La description du livre apres",
+//                Language.Bengali,
+//                47,
+//                68,
+//                null,
+//                new int[]{2},
+//                new int[]{1}
+//        ));
+
+//        System.out.println(book.searchBook("cn").toString());
+//
+//        System.out.println(book.deleteBook("278s2vf0"));
 
 
 //        UserDao user = new UserDao();
@@ -18,20 +55,28 @@ public class App {
 //            System.out.println( ((User)user.getByEmailWithRoles()).toString() );
 
 
-        AuthenticationController user = new AuthenticationController();
+//        AuthenticationController user = new AuthenticationController();
+//
+//        if(user.authenticate(
+//                "12345690",
+//                "68767498739879"
+//        )){
+//            System.out.println("L'utilisateur a été inséré avec succès !");
+//        } else {
+//            System.out.println("Erreur lors de l'insertion de l'utilisateur.");
+//        }
 
-        if(user.registerUser(
-                "outman",
-                "ouharri",
-                "ouharrioutman@gmail.com",
-                "687674987398749",
-                "male",
-                "1234567890"
-        )){
-            System.out.println("L'utilisateur a été inséré avec succès !");
-        } else {
-            System.out.println("Erreur lors de l'insertion de l'utilisateur.");
-        }
+//        System.out.println(user.register(
+//                "AD333647",
+//                "outman",
+//                "ouharri",
+//                "ouharrioutman@gmail.com",
+//                "68767498739879",
+//                Gender.valueOf("Male"),
+//                "12345690"
+//        ).getEmail());
+
+//        System.out.println(new BookController().getBooks().toString());
 
 
 
@@ -85,5 +130,25 @@ public class App {
 //            e.printStackTrace();
 //        }
 
+        LoanController loan = new LoanController();
+
+        System.out.println(loan.createLoan(
+                "2340700",
+                "1",
+                "AD333647",
+                new java.sql.Timestamp(System.currentTimeMillis()),
+                new java.sql.Timestamp(System.currentTimeMillis())
+        ));
+
+    }
+    @Override
+    public void close() throws Exception {
+        if (this.connection != null) {
+            try {
+                this.connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -1,48 +1,40 @@
 package com.biblio.dao;
 
-import com.biblio.app.model.Author;
-import com.biblio.app.model.Book;
+import com.biblio.app.Models.Author;
+import com.biblio.app.Models.Book;
+import com.biblio.app.Models.Log;
+import com.biblio.libs.Model;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public final class AuthorDao extends Author {
+public final class AuthorDao extends Model {
 
-    public Author[] getAuthorByBook(Book book) throws Exception {
+    private Author author = null;
+
+
+    public AuthorDao() {
+        super("authors", new String[]{"id"});
+        this.author = new Author();
+    }
+
+    public List<Author> getAuthorByBook(Book book) throws Exception {
 
         try(BooksAuthorsDao BooksAuthorsDao = new BooksAuthorsDao()){
             List<Map<String, String>> resultList = BooksAuthorsDao.readAll("book",book.getIsbn());
-            Author[] authors = new Author[resultList.size()];
+            List<Author> authors = new ArrayList<Author>();
 
-            for (int i = 0; i < resultList.size(); i++) {
-                Map<String, String> rowData = resultList.get(i);
-                    this.setId(Integer.parseInt(rowData.get("id")));
-                this.setFirstName(rowData.get("firstName"));
-                this.setLastName(rowData.get("lastName"));
-                    authors[i] = this;
+            for (Map<String, String> rowData : resultList) {
+                this.author.setId(Integer.parseInt(rowData.get("id")));
+                this.author.setFirst_name(rowData.get("first_name"));
+                this.author.setLast_name(rowData.get("last_name"));
+                authors.add(this.author);
             }
             return authors;
         }
     }
 
-    @Override
-    public boolean create() throws SQLException {
-        return false;
-    }
 
-    @Override
-    public Book read() {
-        return null;
-    }
-
-    @Override
-    public boolean update() throws SQLException {
-        return false;
-    }
-
-    @Override
-    public boolean delete() {
-        return false;
-    }
 }

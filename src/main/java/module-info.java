@@ -12,6 +12,7 @@ module com.biblio {
     requires java.sql;
     requires lombok;
     requires jBCrypt;
+    requires mysql.connector.java;
 
     opens com.biblio to javafx.fxml;
     exports com.biblio;

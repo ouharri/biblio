@@ -1,20 +1,17 @@
-package com.biblio.app.model;
+package com.biblio.app.Models;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import com.biblio.libs.Model;
+
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Data
-@EqualsAndHashCode(callSuper = true)
-public abstract class Category extends Model {
+@EqualsAndHashCode(callSuper = false)
+public class Category{
 
-	public Category() {
-		super("categories", new String[]{"id"});
-	}
 
 	protected int id;
 	protected String category;
@@ -36,14 +33,15 @@ public abstract class Category extends Model {
 		this.description = description;
 	}
 
-	public void hasBooks(List<Book> book) {
-		this.book = book;
-	}
-
 	public void setCategory(int id ,String category, String description) {
 		this.id = id;
 		this.category = category;
 		this.description = description;
 	}
+
+	public void hasBooks(List<Book> book) {
+		this.book = book;
+	}
+
 
 }
