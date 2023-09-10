@@ -345,12 +345,14 @@ public final class BookDao extends Model {
     }
     public boolean existsBookQuantity(String isbn) {
         try {
-            String query = "SELECT COUNT(*) " +
+            String query = "SELECT DISTINCT COUNT(*), b.quantities " +
                     "FROM `books` b " +
-                    "LEFT JOIN `borrowed_books` bb ON b.isbn = bb.book " +
-                    "WHERE b.isbn = ? AND (bb.return_date IS NULL OR bb.return_date = '') " +
-                    "GROUP BY b.isbn, b.quantities " +
-                    "HAVING SUM(CASE WHEN bb.return_date IS NULL THEN 1 ELSE 0 END) < b.quantities";
+                    "LEFT JOIN `borrowed_books` bb ON b.isbn = bb.book AND bb.return_date IS NULL " +
+                    "LEFT JOIN `lost_books` lb ON b.isbn = lb.book " +
+                    "WHERE b.isbn = ? AND (" +
+                    "    (bb.return_date IS NULL AND lb.actual_status IS NULL) OR " +
+                    "    (bb.return_date IS NULL AND lb.actual_status = 'still_lost')" +
+                    ");";
 
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
 
@@ -358,7 +360,12 @@ public final class BookDao extends Model {
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            return resultSet.next();
+            if (resultSet.next()) {
+                int totalQuantity = resultSet.getInt(2);
+                int availableQuantity = resultSet.getInt(1);
+
+                return availableQuantity > 0 && availableQuantity < totalQuantity;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

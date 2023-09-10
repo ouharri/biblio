@@ -131,7 +131,10 @@ public class BookController {
      * @throws Exception If an error occurs during loan processing.
      */
     public boolean loanBook(String isbn,String book_reference,String cnie,java.sql.Timestamp loan_date,java.sql.Timestamp expected_return_date) throws Exception {
-        if(bookDao.existsBookQuantity(isbn)){
+        System.out.println("\n\n" + !loanDao.userAlreadyLoanBook(isbn, cnie, book_reference) + "\n\n");
+        System.out.println(bookDao.existsBookQuantity(isbn) + "\n\n");
+
+        if(bookDao.existsBookQuantity(isbn) && !loanDao.userAlreadyLoanBook(isbn, cnie, book_reference)){
             return loanDao.loanBook(isbn,book_reference,cnie,loan_date,expected_return_date) != null;
         }
 

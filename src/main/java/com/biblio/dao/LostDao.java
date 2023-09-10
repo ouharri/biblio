@@ -12,7 +12,7 @@ public final class LostDao extends Model {
 
 
     public LostDao() {
-        super("lost_books", new String[]{"id"});
+        super("lost_books", new String[]{"book","book_reference","lost_date"});
     }
 
     public Lost add(String isbn,String book_reference,String description) throws Exception {
@@ -48,6 +48,10 @@ public final class LostDao extends Model {
         return null;
 
     }
+
+//    public boolean bookAlreadyLost(String isbn,String book_reference){
+//
+//    }
 
 
 }

@@ -151,9 +151,10 @@ public final class LoanDao extends Model {
     public boolean userAlreadyLoanBook(String isbn, String cnie, String book_reference) throws SQLException {
         try (
                 PreparedStatement selectStatement = this.connection.prepareStatement(
-                        "SELECT  EXISTS(MAX(requested_at)) AS loan_exists " +
+                        "SELECT COUNT(*) AS loan_exists " +
                                 "FROM borrowed_books " +
-                                "WHERE book = ? AND user = ? AND book_reference = ? AND return_date IS NULL"
+                                "WHERE book = ? AND user = ? AND book_reference = ? AND return_date IS NULL " +
+                                "LIMIT 1"
                 )
         ) {
             selectStatement.setString(1, isbn);
@@ -162,7 +163,7 @@ public final class LoanDao extends Model {
 
             try (ResultSet resultSet = selectStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    return resultSet.getBoolean("loan_exists");
+                    return resultSet.getInt("loan_exists") > 0;
                 }
             }
         } catch (SQLException e) {

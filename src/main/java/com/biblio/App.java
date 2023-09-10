@@ -129,20 +129,22 @@ public class App implements AutoCloseable{
 //            e.printStackTrace();
 //        }
 
-
-//        System.out.println(book.loanBook(
-//                "2340700",
-//                "1",
-//                "AD333647",
-//                new java.sql.Timestamp(System.currentTimeMillis()),
-//                new java.sql.Timestamp(System.currentTimeMillis())
-//        ));
-
         System.out.println(book.returnBook(
                 "2340700",
                 "AD333647",
                 "1"
         ));
+
+
+        System.out.println(book.loanBook(
+                "2340700",
+                "1",
+                "AD333647",
+                new java.sql.Timestamp(System.currentTimeMillis()),
+                new java.sql.Timestamp(System.currentTimeMillis())
+        ));
+
+
 
     }
     @Override
