@@ -4,51 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="974a4e58-64ac-46a1-b270-b71322b9e800" name="Changes" comment="L-2 impement interface and abstract class">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/Controllers/AdminController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/Controllers/BookController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/Controllers/LoanController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/Controllers/UserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/Controllers/memberController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/Enums/Gender.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/Enums/Language.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/Enums/LostStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/Models/Loan.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/Models/Lost.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/Models/admin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/Models/member.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+    <list default="true" id="974a4e58-64ac-46a1-b270-b71322b9e800" name="Changes" comment="L-3 L-4 l-5 progress">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/Exceptions/NoQuantityBookException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/app/controller/AnalysisController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/Controllers/AnalysisController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/app/controller/AuthenticationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/Controllers/AuthenticationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/app/controller/BookController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/app/controller/BorrowController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/app/controller/UserController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/app/exceptions/existingUserException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/Exceptions/existingUserException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/Author.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/Models/Author.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/Models/Book.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/Models/Category.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/Loan.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/Log.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/Models/Log.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/Lost.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/Models/Role.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/Models/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/app/model/WaitingList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/Models/WaitingList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/core/database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/core/database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/dao/AuthorDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/dao/AuthorDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/app/Controllers/LoanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/Controllers/LoanController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/dao/BookDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/dao/BookDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/dao/BooksAuthorsDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/dao/BooksAuthorsDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/dao/CategorieBookDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/dao/CategorieBookDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/dao/CategoryDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/dao/CategoryDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/dao/LoanDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/dao/LoanDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/dao/LogDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/dao/LogDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/dao/LostDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/dao/LostDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/dao/RoleDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/dao/RoleDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/dao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/dao/UserDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/dao/WaitingListDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/dao/WaitingListDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/libs/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/libs/Model.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -143,7 +103,7 @@
       <workItem from="1693869703177" duration="20518000" />
       <workItem from="1693912003675" duration="55541000" />
       <workItem from="1694015755088" duration="47597000" />
-      <workItem from="1694179252694" duration="32286000" />
+      <workItem from="1694179252694" duration="39348000" />
     </task>
     <task id="LOCAL-00001" summary="L-2 migrate to javaFX">
       <created>1693864551197</created>
@@ -194,7 +154,14 @@
       <option name="project" value="LOCAL" />
       <updated>1693998448517</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="L-3 L-4 l-5 progress">
+      <created>1694286213036</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1694286213036</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -203,7 +170,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="L-2 migrate to javaFX" />
     <MESSAGE value="L-2 impement interface and abstract class" />
-    <option name="LAST_COMMIT_MESSAGE" value="L-2 impement interface and abstract class" />
+    <MESSAGE value="L-3 L-4 l-5 progress" />
+    <option name="LAST_COMMIT_MESSAGE" value="L-3 L-4 l-5 progress" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

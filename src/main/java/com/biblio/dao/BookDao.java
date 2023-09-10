@@ -53,6 +53,43 @@ public final class BookDao extends Model {
 
         return books;
     }
+    public List<Book> getAvailableBooks() {
+        List<Book> availableBooks = new ArrayList<>();
+
+        try {
+            String query = "SELECT DISTINCT" +
+                    "       b.isbn," +
+                    "       b.quantities," +
+                    "       b.pages," +
+                    "       b.title," +
+                    "       b.edition," +
+                    "       b.language," +
+                    "       b.description," +
+                    "       a.id AS author_id," +
+                    "       a.first_name AS author_firstName," +
+                    "       a.last_name AS author_lastName," +
+                    "       c.category," +
+                    "       c.description AS category_description " +
+                    "FROM books b " +
+                    "LEFT JOIN books_authors ba ON b.isbn = ba.book " +
+                    "LEFT JOIN authors a ON ba.author = a.id " +
+                    "LEFT JOIN categories_books cb ON b.isbn = cb.book " +
+                    "LEFT JOIN categories c ON cb.category = c.id " +
+                    "LEFT JOIN borrowed_books bb ON b.isbn = bb.book " +
+                    "WHERE b.delete_at IS NULL " +
+                    "GROUP BY b.isbn, b.quantities " +
+                    "HAVING SUM(CASE WHEN bb.return_date IS NULL THEN 1 ELSE 0 END) < b.quantities " +
+                    "ORDER BY b.isbn;";
+
+            PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+            executeAndWrrapQuery(availableBooks, preparedStatement);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return availableBooks;
+    }
     public List<Book> search(String keywords) {
         List<Book> books = new ArrayList<>();
 
@@ -219,7 +256,6 @@ public final class BookDao extends Model {
     public boolean delete(String isbn) {
         return super.softDelete(new String[]{isbn});
     }
-
     public Book find(String isbn) {
         Book book = null;
 
@@ -307,25 +343,28 @@ public final class BookDao extends Model {
 
         return book;
     }
+    public boolean existsBookQuantity(String isbn) {
+        try {
+            String query = "SELECT COUNT(*) " +
+                    "FROM `books` b " +
+                    "LEFT JOIN `borrowed_books` bb ON b.isbn = bb.book " +
+                    "WHERE b.isbn = ? AND (bb.return_date IS NULL OR bb.return_date = '') " +
+                    "GROUP BY b.isbn, b.quantities " +
+                    "HAVING SUM(CASE WHEN bb.return_date IS NULL THEN 1 ELSE 0 END) < b.quantities";
 
-    public Book read() {
-        Map<String, String> Book = super.read(new String[]{this.book.getIsbn()});
+            PreparedStatement preparedStatement = this.connection.prepareStatement(query);
 
-        System.out.println(Book.toString());
+            preparedStatement.setString(1, isbn);
 
-        this.book.setBook(
-                Book.get("isbn"),
-                Integer.parseInt(Book.get("quantities")),
-                Integer.parseInt(Book.get("pages")),
-                Book.get("title"),
-                Book.get("edition"),
-                Language.valueOf(Book.get("language")),
-                Book.get("description")
-        );
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-        return this.book;
+            return resultSet.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
-
     private void executeAndWrrapQuery(List<Book> books, PreparedStatement preparedStatement) throws SQLException {
         ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -398,7 +437,23 @@ public final class BookDao extends Model {
             books.add(currentBook);
         }
     }
+    public Book read() {
+        Map<String, String> Book = super.read(new String[]{this.book.getIsbn()});
 
+        System.out.println(Book.toString());
+
+        this.book.setBook(
+                Book.get("isbn"),
+                Integer.parseInt(Book.get("quantities")),
+                Integer.parseInt(Book.get("pages")),
+                Book.get("title"),
+                Book.get("edition"),
+                Language.valueOf(Book.get("language")),
+                Book.get("description")
+        );
+
+        return this.book;
+    }
 
 //    public List<Book> getAllBooksWhitAllDetail() {
 //        List<Book> books = new ArrayList<>();
