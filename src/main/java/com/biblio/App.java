@@ -2,7 +2,6 @@ package com.biblio;
 
 import com.biblio.app.Controllers.AuthenticationController;
 import com.biblio.app.Controllers.BookController;
-import com.biblio.app.Controllers.LoanController;
 import com.biblio.app.Enums.Gender;
 import com.biblio.app.Enums.Language;
 import com.biblio.core.database;
@@ -130,14 +129,19 @@ public class App implements AutoCloseable{
 //            e.printStackTrace();
 //        }
 
-        LoanController loan = new LoanController();
 
-        System.out.println(loan.createLoan(
+//        System.out.println(book.loanBook(
+//                "2340700",
+//                "1",
+//                "AD333647",
+//                new java.sql.Timestamp(System.currentTimeMillis()),
+//                new java.sql.Timestamp(System.currentTimeMillis())
+//        ));
+
+        System.out.println(book.returnBook(
                 "2340700",
-                "1",
                 "AD333647",
-                new java.sql.Timestamp(System.currentTimeMillis()),
-                new java.sql.Timestamp(System.currentTimeMillis())
+                "1"
         ));
 
     }

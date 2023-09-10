@@ -1,16 +1,52 @@
 package com.biblio.dao;
 
 import com.biblio.app.Models.Book;
+import com.biblio.app.Models.Loan;
 import com.biblio.app.Models.Lost;
+import com.biblio.app.Models.User;
 import com.biblio.libs.Model;
+
+import java.util.Map;
 
 public final class LostDao extends Model {
 
-    private Lost lost = null;
 
     public LostDao() {
         super("lost_books", new String[]{"id"});
-        this.lost = new Lost();
+    }
+
+    public Lost add(String isbn,String book_reference,String description) throws Exception {
+
+        Book book;
+        Lost lost = new Lost();
+
+        try (BookDao bookDao = new BookDao()) {
+            book = bookDao.find(isbn);
+        }
+
+        lost.setBook(
+                book.getIsbn(),
+                book.getQuantities(),
+                book.getPages(),
+                book.getTitle(),
+                book.getEdition(),
+                book.getLanguage(),
+                book.getDescription()
+        );
+
+        lost.setLost(
+                book_reference,
+                description
+        );
+
+        Map<String, String> LostData = lost.getLost();
+
+        if (super.create(LostData) != null) {
+            return lost;
+        }
+
+        return null;
+
     }
 
 
