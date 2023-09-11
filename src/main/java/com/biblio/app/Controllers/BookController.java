@@ -1,5 +1,6 @@
 package com.biblio.app.Controllers;
 
+import com.biblio.app.Enums.LostStatus;
 import com.biblio.app.Exceptions.NoQuantityBookException;
 import com.biblio.app.Models.Book;
 import com.biblio.dao.*;
@@ -31,7 +32,7 @@ public class BookController {
      *
      * @return A list of books.
      */
-    public List<Book> getBooks() {
+    public List<Book> getAlBooks() {
         return bookDao.getAllBooks();
     }
     /**
@@ -55,6 +56,15 @@ public class BookController {
      */
     public List<Book> getBorrowedBooks() {
         return bookDao.getBorrowedBooks();
+    }
+    /**
+     * Retrieves a list of all borrowed books by a user.
+     *
+     * @param cnie The CNIE (user identifier) of the user.
+     * @return A list of borrowed books.
+     */
+    public Book find(String isbn) throws SQLException {
+        return bookDao.find(isbn);
     }
     /**
      * Adds a new book to the database.
@@ -134,6 +144,17 @@ public class BookController {
     }
 
     /**
+     * Searches for available books by keyword.
+     *
+     * @param Keyword The keyword to search for.
+     * @return A list of available books matching the keyword.
+     * @throws SQLException If a database error occurs.
+     */
+    public List<Book> searchInAvailableBooks(String Keyword) throws SQLException {
+        return bookDao.searchInAvailableBooks(Keyword);
+    }
+
+    /**
      * Loans a book if copies are available.
      *
      * @param isbn                The ISBN of the book to loan.
@@ -150,7 +171,6 @@ public class BookController {
         }
         throw new NoQuantityBookException();
     }
-
     /**
      * Returns a borrowed book by ISBN, CNIE, and book reference.
      *
@@ -181,5 +201,18 @@ public class BookController {
         return lostDao.add(isbn,book_reference, description) != null;
     }
 
+    /**
+     * Updates a lost book in the database.
+     *
+     * @param isbn         The ISBN of the lost book.
+     * @param book_reference The reference of the lost book.
+     * @param description  A description of the loss.
+     * @param status       The status of the lost book.
+     * @param requested_ad The date the loss was reported.
+     * @return `true` if the book was successfully updated, `false` otherwise.
+     */
+    public boolean updateLost(String isbn,String book_reference,String description, LostStatus status,java.sql.Timestamp requested_ad) throws Exception {
+        return lostDao.updateLost(isbn,book_reference, description, status,requested_ad) != null;
+    }
 
 }

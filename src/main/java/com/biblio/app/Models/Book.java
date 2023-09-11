@@ -4,7 +4,6 @@ import com.biblio.app.Enums.Language;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,13 +25,11 @@ public class Book {
 	protected List<Category> categories = new ArrayList<Category>();
 	protected List<Author> authors = new ArrayList<Author>();
 
-	protected List<Loan> loans = new ArrayList<Loan>();
-	protected List<Lost> Losts = new ArrayList<Lost>();
+	private List<Loan> loans = new ArrayList<Loan>();
+	private List<Lost> Losts = new ArrayList<Lost>();
 
-	protected List<WaitingList> waitingLists = new ArrayList<WaitingList>();
-	protected List<Log> logs = new ArrayList<Log>();
-
-
+	private List<WaitingList> waitingLists = new ArrayList<WaitingList>();
+	private List<Log> logs = new ArrayList<Log>();
 
 
 	public void setBook(String isbn, int quantities, int pages, String title, String edition, Language language, String description) {
@@ -57,8 +54,6 @@ public class Book {
 		return bookData;
 	}
 
-
-
 	public void hasAuthors(List<Author> authors) {
 		this.authors = authors;
 	}
@@ -82,6 +77,5 @@ public class Book {
 	public void hasLogs(List<Log> logs) {
 		this.logs = logs;
 	}
-
 
 }

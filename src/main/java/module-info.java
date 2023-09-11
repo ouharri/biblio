@@ -13,6 +13,7 @@ module com.biblio {
     requires lombok;
     requires jBCrypt;
     requires mysql.connector.java;
+    requires java.desktop;
 
     opens com.biblio to javafx.fxml;
     exports com.biblio;

@@ -59,9 +59,9 @@ public final class UserDao extends Model {
         try {
             String query = "SELECT u.*, r.role, r.id r_id " +
                     "FROM users u " +
-                    "LEFT JOIN users_roles ur ON u.id = ur.user " +
+                    "LEFT JOIN users_roles ur ON u.cnie = ur.user " +
                     "LEFT JOIN roles r ON ur.role = r.id " +
-                    "WHERE u.id = ? AND u.delete_at IS NULL";
+                    "WHERE u.cnie = ? AND u.delete_at IS NULL";
 
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
             preparedStatement.setString(1, this.user.getCnie());
@@ -86,8 +86,6 @@ public final class UserDao extends Model {
 
                 int id = resultSet.getInt("r_id");
                 String roleTitle = resultSet.getString("role");
-
-                System.out.println(id + " " + roleTitle);
 
                 if (roleTitle != null && id > 0) {
                     Role role = new Role();
@@ -142,12 +140,11 @@ public final class UserDao extends Model {
     public User find(String keyword) {
 
         boolean flag = true;
-        User user = new User();
 
         try {
-            String query = "SELECT u.*, r.role , r.id " +
-                    "FROM " + this._table + " u " +
-                    "LEFT JOIN users_roles ur ON u.cnie = ur.user " +
+            String query = "SELECT u.*, r.role , r.id AS role_id " +
+                    "FROM users u " +
+                    "LEFT JOIN users_roles ur ON ur.user = u.cnie " +
                     "LEFT JOIN roles r ON ur.role = r.id " +
                     "WHERE ( u.email = ? OR u.phone = ? OR u.cnie = ? ) AND u.delete_at IS NULL";
 
@@ -163,26 +160,30 @@ public final class UserDao extends Model {
 
             while (resultSet.next()) {
 
-                    if (resultSet.getString("cnie") != null && flag) {
-                        user.setUser(
-                                resultSet.getString("cnie"),
-                                resultSet.getString("first_name"),
-                                resultSet.getString("last_name"),
-                                Gender.valueOf(resultSet.getString("gender")),
-                                resultSet.getString("email"),
-                                resultSet.getString("phone"),
-                                resultSet.getString("password")
-                        );
+                String cnie = resultSet.getString("cnie");
+
+                    if (cnie != null) {
+                        if(flag){
+                            user.setUser(
+                                    resultSet.getString("cnie"),
+                                    resultSet.getString("first_name"),
+                                    resultSet.getString("last_name"),
+                                    Gender.valueOf(resultSet.getString("gender")),
+                                    resultSet.getString("email"),
+                                    resultSet.getString("phone"),
+                                    resultSet.getString("password")
+                            );
+                        }
                         flag = false;
                     } else return null;
 
-                    int id = resultSet.getInt("id");
+                    int role_id = resultSet.getInt("role_id");
                     String roleTitle = resultSet.getString("role");
 
-                    if (roleTitle != null && id > 0) {
+                    if (roleTitle != null && role_id > 0) {
                         Role role = new Role();
                         role.setRole(
-                                id,
+                                role_id,
                                 roleTitle
                         );
                         roles.add(role);
@@ -265,7 +266,7 @@ public final class UserDao extends Model {
             String query = "SELECT u.*, r.role, r.id " +
                     "FROM users u " +
                     "LEFT JOIN users_roles ur ON u.cnie = ur.user " +
-                    "LEFT JOIN roles r ON ur.role = r.cnie " +
+                    "LEFT JOIN roles r ON ur.role = r.id " +
                     "WHERE u.phone = ? AND u.delete_at IS NULL";
 
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);

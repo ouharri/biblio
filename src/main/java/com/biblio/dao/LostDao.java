@@ -1,5 +1,6 @@
 package com.biblio.dao;
 
+import com.biblio.app.Enums.LostStatus;
 import com.biblio.app.Models.Book;
 import com.biblio.app.Models.Lost;
 import com.biblio.libs.Model;
@@ -47,9 +48,39 @@ public final class LostDao extends Model {
 
     }
 
-//    public boolean bookAlreadyLost(String isbn,String book_reference){
-//
-//    }
+    public Lost updateLost(String isbn, String book_reference,String description, LostStatus status,java.sql.Timestamp requested_ad) throws Exception {
 
+        Book book;
+        Lost lost = new Lost();
+
+        try (BookDao bookDao = new BookDao()) {
+            book = bookDao.find(isbn);
+        }
+
+        lost.setBook(
+                book.getIsbn(),
+                book.getQuantities(),
+                book.getPages(),
+                book.getTitle(),
+                book.getEdition(),
+                book.getLanguage(),
+                book.getDescription()
+        );
+
+        lost.setLost(
+                book_reference,
+                description,
+                status
+        );
+
+        Map<String, String> LostData = lost.getLost();
+
+        if (super.update(LostData, new String[]{isbn, book_reference, String.valueOf(requested_ad)})) {
+            return lost;
+        }
+
+        return null;
+
+    }
 
 }

@@ -93,6 +93,8 @@ public class AuthenticationController {
 
     }
 
+
+
     private boolean isEmail(String input) {
         String EMAIL_REGEX = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}$\n";
         Pattern pattern = Pattern.compile(EMAIL_REGEX);
@@ -113,12 +115,12 @@ public class AuthenticationController {
         return false;
     }
 
-    public String hashPassword(String plainTextPassword) {
+    private String hashPassword(String plainTextPassword) {
         String salt = BCrypt.gensalt();
         return BCrypt.hashpw(plainTextPassword, salt);
     }
 
-    public boolean checkPassword(String plainTextPassword, String hashedPassword) {
+    private boolean checkPassword(String plainTextPassword, String hashedPassword) {
         return BCrypt.checkpw(plainTextPassword, hashedPassword);
     }
 }

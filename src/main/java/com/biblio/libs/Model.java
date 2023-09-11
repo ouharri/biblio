@@ -9,6 +9,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The `Model` class provides a generic model for interacting with a database table. It implements CRUD (Create, Read, Update, Delete) operations
+ * and supports transactions. This class should be extended by specific models for individual database tables.
+ */
 public class Model implements AutoCloseable, CRUD {
     protected Connection connection = null;
     protected String _table = null;
@@ -26,12 +30,25 @@ public class Model implements AutoCloseable, CRUD {
     }
 
 
+    /**
+     * Begins a database transaction. Call this method before performing a series of database operations
+     * that should be treated as a single transaction. This allows for rolling back changes in case of errors.
+     *
+     * @throws SQLException If a database access error occurs.
+     */
     public void beginTransaction() throws SQLException {
         if (!inTransaction) {
             this.connection.setAutoCommit(false);
             this.inTransaction = true;
         }
     }
+
+    /**
+     * Commits the current database transaction. This should be called after successfully completing a series
+     * of database operations within a transaction.
+     *
+     * @throws SQLException If a database access error occurs.
+     */
     public void commitTransaction() throws SQLException {
         if (inTransaction) {
             this.connection.commit();
@@ -39,6 +56,13 @@ public class Model implements AutoCloseable, CRUD {
             this.inTransaction = false;
         }
     }
+
+    /**
+     * Rolls back the current database transaction. This should be called in case of an error or when you want
+     * to discard changes made within the current transaction.
+     *
+     * @throws SQLException If a database access error occurs.
+     */
     public void rollbackTransaction() throws SQLException {
         if (inTransaction) {
             this.connection.rollback();
@@ -47,7 +71,11 @@ public class Model implements AutoCloseable, CRUD {
         }
     }
 
-
+    /**
+     * Retrieves all records from the associated database table.
+     *
+     * @return A list of maps, where each map represents a row of data with column names as keys.
+     */
     public List<Map<String, String>> getAll() {
         List<Map<String, String>> resultList = new ArrayList<>();
         try {
@@ -78,6 +106,14 @@ public class Model implements AutoCloseable, CRUD {
         }
         return resultList;
     }
+
+    /**
+     * Searches for records in the associated database table that match a given keyword in specified columns.
+     *
+     * @param keyword The search keyword to match.
+     * @param columns The columns in which to perform the search.
+     * @return A list of maps, where each map represents a row of data with column names as keys.
+     */
     public List<Map<String, String>> search(String keyword, String[] columns) {
         List<Map<String, String>> resultList = new ArrayList<>();
         try {
@@ -125,6 +161,13 @@ public class Model implements AutoCloseable, CRUD {
         return resultList;
     }
 
+    /**
+     * Creates a new record in the associated database table with the provided data.
+     *
+     * @param data A map of column names and their corresponding values for the new record.
+     * @return The primary key value (e.g., ID) of the newly created record, or null if the operation fails.
+     * @throws SQLException If a database access error occurs.
+     */
     @Override
     public String create(Map<String, String> data) throws SQLException {
         StringBuilder columns = new StringBuilder();
@@ -158,6 +201,13 @@ public class Model implements AutoCloseable, CRUD {
         }
         return null;
     }
+
+    /**
+     * Reads a single record from the associated database table based on the specified primary key values.
+     *
+     * @param ids An array of primary key values used to identify the record.
+     * @return A map representing the retrieved record's data, or null if the record is not found.
+     */
     @Override
     public Map<String, String> read(String[] ids) {
         try {
@@ -201,6 +251,14 @@ public class Model implements AutoCloseable, CRUD {
         }
         return null;
     }
+
+    /**
+     * Reads a single record from the associated database table based on a specific column value.
+     *
+     * @param columnName The name of the column to search.
+     * @param value      The value to search for in the specified column.
+     * @return A map representing the retrieved record's data, or null if the record is not found.
+     */
     @Override
     public Map<String, String> read(String columnName, String value) {
         try {
@@ -236,6 +294,14 @@ public class Model implements AutoCloseable, CRUD {
         }
         return null;
     }
+
+    /**
+     * Retrieves the count of records in the associated database table that match a specific column value.
+     *
+     * @param WhereColumnName The name of the column to search.
+     * @param value           The value to search for in the specified column.
+     * @return The count of records matching the specified column value.
+     */
     public int getColumnCount(String WhereColumnName, String value) {
         System.out.println(this._softDelete);
         try {
@@ -258,6 +324,14 @@ public class Model implements AutoCloseable, CRUD {
         }
         return 0;
     }
+
+    /**
+     * Retrieves all records from the associated database table that match a specific column value.
+     *
+     * @param columnName The name of the column to search.
+     * @param value      The value to search for in the specified column.
+     * @return A list of maps, where each map represents a row of data with column names as keys.
+     */
     public List<Map<String, String>> readAll(String columnName, String value) {
         List<Map<String, String>> resultList = new ArrayList<>();
         try {
@@ -290,6 +364,13 @@ public class Model implements AutoCloseable, CRUD {
         }
         return resultList;
     }
+
+    /**
+     * Retrieves all records from the associated database table based on the specified primary key values.
+     *
+     * @param ids An array of primary key values used to identify the records.
+     * @return A list of maps, where each map represents a row of data with column names as keys.
+     */
     public List<Map<String, String>> readAll(String[] ids) {
         List<Map<String, String>> resultList = new ArrayList<>();
         try {
@@ -334,7 +415,13 @@ public class Model implements AutoCloseable, CRUD {
         return resultList;
     }
 
-
+    /**
+     * Updates records in the associated database table with the provided data based on specified primary key values.
+     *
+     * @param data A map of column names and their corresponding values for the update.
+     * @param ids  An array of primary key values used to identify the records to be updated.
+     * @return True if the update operation is successful; otherwise, false.
+     */
     @Override
     public boolean update(Map<String, String> data,String[] ids) {
         try {
@@ -371,6 +458,13 @@ public class Model implements AutoCloseable, CRUD {
             return false;
         }
     }
+
+    /**
+     * Deletes records from the associated database table based on specified primary key values.
+     *
+     * @param ids An array of primary key values used to identify the records to be deleted.
+     * @return True if the delete operation is successful; otherwise, false.
+     */
     @Override
     public boolean delete(String[] ids) {
         try {
@@ -401,6 +495,13 @@ public class Model implements AutoCloseable, CRUD {
         }
     }
 
+    /**
+     * Performs a soft delete operation on the records identified by the given IDs.
+     * Soft delete sets the "delete_at" column to the current timestamp.
+     *
+     * @param ids The array of IDs of records to be soft-deleted.
+     * @return True if the records were successfully soft-deleted; otherwise, false.
+     */
     public boolean softDelete(String[] ids) {
         try {
 
@@ -431,7 +532,6 @@ public class Model implements AutoCloseable, CRUD {
             return false;
         }
     }
-
 
     @Override
     public void close() throws Exception {

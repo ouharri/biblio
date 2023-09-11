@@ -1,10 +1,7 @@
 package com.biblio;
 
-import com.biblio.app.Controllers.AuthenticationController;
-import com.biblio.app.Controllers.BookController;
-import com.biblio.app.Enums.Gender;
-import com.biblio.app.Enums.Language;
 import com.biblio.core.database;
+import com.biblio.view.Authentication.Signing;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -24,25 +21,26 @@ public class App implements AutoCloseable{
     public static void main(String[] args) throws Exception {
 
 
-
+        Signing signin = new Signing();
 //        BookDao book = new BookDao();
+//        System.out.println(book.search("Le titre du livre djjdn N test").toString());
 //        book.setIsbn("90");
 //
 //        book.read();
 
-        BookController book = new BookController();
-
-        System.out.println(book.updateBook(
-                "23d00700",
-                "Le titre du livr djjdn N test",
-                "La description du livre apres",
-                Language.Bengali,
-                47,
-                68,
-                null,
-                new int[]{2},
-                new int[]{1}
-        ));
+//        BookController book = new BookController();
+//
+//        System.out.println(book.updateBook(
+//                "23d00700",
+//                "Le titre du livr djjdn N test",
+//                "La description du livre apres",
+//                Language.Bengali,
+//                47,
+//                68,
+//                null,
+//                new int[]{2},
+//                new int[]{1}
+//        ));
 
 //        System.out.println(book.searchBook("cn").toString());
 //

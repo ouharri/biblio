@@ -24,7 +24,7 @@ public class Lost extends Book{
 		this.actual_status = status;
 	}
 
-	public void setLost(int id,String book_reference, String description, LostStatus status){
+	public void setLost(String book_reference, String description, LostStatus status){
 		this.book_reference = book_reference;
 		this.description = description;
 		this.actual_status = status;

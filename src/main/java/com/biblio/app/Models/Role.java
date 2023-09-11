@@ -12,13 +12,13 @@ import java.util.List;
 public class Role{
 
     protected int id;
-    protected String role;
+    protected com.biblio.app.Enums.Role role;
 
     protected List<User> users = new ArrayList<User>();
 
     public void setRole(int id, String roleTitle) {
         this.id = id;
-        this.role = roleTitle;
+        this.role = com.biblio.app.Enums.Role.valueOf(roleTitle);
     }
 
     public void hasUsers(List<User> users) {
