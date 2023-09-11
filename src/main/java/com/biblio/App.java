@@ -32,17 +32,17 @@ public class App implements AutoCloseable{
 
         BookController book = new BookController();
 
-//        System.out.println(book.updateBook(
-//                "278s2vf0",
-//                "Le titre du livre djjdn N",
-//                "La description du livre apres",
-//                Language.Bengali,
-//                47,
-//                68,
-//                null,
-//                new int[]{2},
-//                new int[]{1}
-//        ));
+        System.out.println(book.updateBook(
+                "23d00700",
+                "Le titre du livr djjdn N test",
+                "La description du livre apres",
+                Language.Bengali,
+                47,
+                68,
+                null,
+                new int[]{2},
+                new int[]{1}
+        ));
 
 //        System.out.println(book.searchBook("cn").toString());
 //
@@ -129,20 +129,20 @@ public class App implements AutoCloseable{
 //            e.printStackTrace();
 //        }
 
-        System.out.println(book.returnBook(
-                "2340700",
-                "AD333647",
-                "1"
-        ));
+//        System.out.println(book.returnBook(
+//                "2340700",
+//                "AD333647",
+//                "1"
+//        ));
 
 
-        System.out.println(book.loanBook(
-                "2340700",
-                "1",
-                "AD333647",
-                new java.sql.Timestamp(System.currentTimeMillis()),
-                new java.sql.Timestamp(System.currentTimeMillis())
-        ));
+//        System.out.println(book.loanBook(
+//                "2340700",
+//                "1",
+//                "AD333647",
+//                new java.sql.Timestamp(System.currentTimeMillis()),
+//                new java.sql.Timestamp(System.currentTimeMillis())
+//        ));
 
 
 

@@ -1,9 +1,7 @@
 package com.biblio.dao;
 
 import com.biblio.app.Models.Book;
-import com.biblio.app.Models.Loan;
 import com.biblio.app.Models.Lost;
-import com.biblio.app.Models.User;
 import com.biblio.libs.Model;
 
 import java.util.Map;

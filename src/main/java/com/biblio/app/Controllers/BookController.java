@@ -41,6 +41,22 @@ public class BookController {
      */
     public List<Book> getAvailableBooks() { return bookDao.getAvailableBooks(); }
     /**
+     * Retrieves a list of all lost books.
+     *
+     * @return A list of lost books.
+     */
+    public List<Book> getLostBooks() {
+        return bookDao.getLostBooks();
+    }
+    /**
+     * Retrieves a list of all borrowed books.
+     *
+     * @return A list of borrowed books.
+     */
+    public List<Book> getBorrowedBooks() {
+        return bookDao.getBorrowedBooks();
+    }
+    /**
      * Adds a new book to the database.
      *
      * @param isbn         The ISBN of the book.
@@ -117,8 +133,6 @@ public class BookController {
         return bookDao.search(Keyword);
     }
 
-
-
     /**
      * Loans a book if copies are available.
      *
@@ -131,13 +145,9 @@ public class BookController {
      * @throws Exception If an error occurs during loan processing.
      */
     public boolean loanBook(String isbn,String book_reference,String cnie,java.sql.Timestamp loan_date,java.sql.Timestamp expected_return_date) throws Exception {
-        System.out.println("\n\n" + !loanDao.userAlreadyLoanBook(isbn, cnie, book_reference) + "\n\n");
-        System.out.println(bookDao.existsBookQuantity(isbn) + "\n\n");
-
         if(bookDao.existsBookQuantity(isbn) && !loanDao.userAlreadyLoanBook(isbn, cnie, book_reference)){
             return loanDao.loanBook(isbn,book_reference,cnie,loan_date,expected_return_date) != null;
         }
-
         throw new NoQuantityBookException();
     }
 
@@ -159,7 +169,6 @@ public class BookController {
     }
 
 
-
     /**
      * Registers a lost book in the database.
      *
@@ -171,4 +180,6 @@ public class BookController {
     public boolean lostBook(String isbn,String book_reference,String description) throws Exception {
         return lostDao.add(isbn,book_reference, description) != null;
     }
+
+
 }
