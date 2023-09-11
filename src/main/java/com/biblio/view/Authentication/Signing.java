@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.biblio.app.Models.Role;
@@ -91,7 +92,9 @@ public class Signing extends JFrame implements ActionListener {
                 roles.forEach(role -> {
 
                     switch (role.getRole()) {
-                        case ADMIN -> new com.biblio.view.Admin.index();
+                        case ADMIN -> {
+                            new com.biblio.view.Admin.index();
+                        }
                         case LIBRARIAN -> new com.biblio.view.Librairian.index();
                     }
 
