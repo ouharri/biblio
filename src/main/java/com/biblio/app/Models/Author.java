@@ -29,5 +29,9 @@ public class Author{
 		this.last_name = authorLastName;
 	}
 
+	public String getFullName() {
+		return this.first_name + " " + this.last_name;
+	}
+
 
 }

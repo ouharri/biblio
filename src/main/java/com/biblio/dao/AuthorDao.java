@@ -36,5 +36,21 @@ public final class AuthorDao extends Model {
         }
     }
 
+    public String[] getAllAuthors() {
+        List<Map<String, String>> resultList = this.getAll();
+        String[] authors = new String[resultList.size()];
+
+        for (int i = 0; i < resultList.size(); i++) {
+            Map<String, String> rowData = resultList.get(i);
+            int id = Integer.parseInt(rowData.get("id"));
+            String fullName = id + " ," + rowData.get("first_name") + " " + rowData.get("last_name");
+
+            authors[i] = String.valueOf(fullName);
+        }
+
+        return authors;
+    }
+
+
 
 }

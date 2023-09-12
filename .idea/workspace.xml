@@ -5,22 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="974a4e58-64ac-46a1-b270-b71322b9e800" name="Changes" comment="L-3 L-4 l-5 progress">
-      <change afterPath="$PROJECT_DIR$/assets/icon/available.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/icon/book.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/icon/borrow.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/icon/logout.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/icon/lost.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/icon/product.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/icon/statistics.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/icon/user.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/icon/waiting.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/images/app/book-stack.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/images/app/description.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/images/app/user.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/icon/add_book.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/icon/delete_book.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/icon/edit_book.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/biblio/view/Book/addBook.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/biblio/view/core/ButtonEditor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/biblio/view/core/ButtonRenderer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/images/app/logo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/icon/lost.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/icon/lost.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/app/Models/Author.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/Models/Author.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/app/Models/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/Models/Category.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/app/Models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/Models/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/dao/AuthorDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/dao/AuthorDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/dao/CategoryDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/dao/CategoryDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/view/Admin/index.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/view/Admin/index.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/view/Authentication/Signing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/view/Authentication/Signing.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,35 +46,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "dart.analysis.tool.window.visible": "false",
-    "extract.method.default.visibility": "private",
-    "full.screen.before.presentation.mode": "false",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/proj/biblio/assets/icon",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.editor",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
+    &quot;full.screen.before.presentation.mode&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/proj/biblio/assets/icon&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\proj\biblio\assets\icon" />
@@ -89,7 +87,7 @@
       <recent name="C:\proj\biblio\assets\images\app" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Signing">
+  <component name="RunManager" selected="Application.app">
     <configuration name="Signing" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.biblio.view.Authentication.Signing" />
       <module name="biblio" />
@@ -142,7 +140,9 @@
       <workItem from="1694389827472" duration="250000" />
       <workItem from="1694390173659" duration="1036000" />
       <workItem from="1694419237663" duration="356000" />
-      <workItem from="1694419950147" duration="36827000" />
+      <workItem from="1694419950147" duration="37904000" />
+      <workItem from="1694506786482" duration="89000" />
+      <workItem from="1694506902813" duration="28087000" />
     </task>
     <task id="LOCAL-00001" summary="L-2 migrate to javaFX">
       <created>1693864551197</created>
@@ -235,7 +235,14 @@
       <option name="project" value="LOCAL" />
       <updated>1694458297366</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="L-3 L-4 l-5 progress">
+      <created>1694477926727</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1694477926727</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

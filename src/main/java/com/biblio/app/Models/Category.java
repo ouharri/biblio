@@ -14,7 +14,7 @@ public class Category{
 
 
 	protected int id;
-	protected String category;
+	protected String cat;
 	protected String description;
 	protected java.sql.Timestamp delete_at;
 
@@ -23,19 +23,19 @@ public class Category{
 	public Map<String, String> getCategory() {
 		Map<String, String> CategoryData = new HashMap<>();
 		CategoryData.put("id", String.valueOf(this.id));
-		CategoryData.put("category", this.category);
+		CategoryData.put("category", this.cat);
 		CategoryData.put("description", this.description);
 		return CategoryData;
 	}
 
 	public void setCategory(String category, String description) {
-		this.category = category;
+		this.cat = category;
 		this.description = description;
 	}
 
 	public void setCategory(int id ,String category, String description) {
 		this.id = id;
-		this.category = category;
+		this.cat = category;
 		this.description = description;
 	}
 
