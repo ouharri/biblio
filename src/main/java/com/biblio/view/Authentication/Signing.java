@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.biblio.app.Models.Role;
+import com.biblio.app.Models.User;
 
 
 public class Signing extends JFrame implements ActionListener {
@@ -37,7 +38,7 @@ public class Signing extends JFrame implements ActionListener {
         userIcon = new ImageIcon("user.png");
         passwordIcon = new ImageIcon("password.png");
 
-        ImageIcon logoIcon = new ImageIcon("assets/logo.png");
+        ImageIcon logoIcon = new ImageIcon("assets/images/app/logo.png");
         Image logo = logoIcon.getImage();
 
         username = new JTextField();
@@ -63,7 +64,6 @@ public class Signing extends JFrame implements ActionListener {
         loginButton.setContentAreaFilled(false);
         loginButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-
         loginButton.addActionListener(this);
         resetButton.addActionListener(this);
 
@@ -88,12 +88,17 @@ public class Signing extends JFrame implements ActionListener {
 
                 dispose();
 
-                List<Role> roles = auth.getUserByCnieOrEmailOrPhone(enteredUsername).getRoles();
-                roles.forEach(role -> {
+                User user = auth.getUserByCnieOrEmailOrPhone(enteredUsername);
+                List<Role> roles = user.getRoles();
 
+                roles.forEach(role -> {
                     switch (role.getRole()) {
                         case ADMIN -> {
-                            new com.biblio.view.Admin.index();
+                            try {
+                                new com.biblio.view.Admin.index(user);
+                            } catch (SQLException ex) {
+                                throw new RuntimeException(ex);
+                            }
                         }
                         case LIBRARIAN -> new com.biblio.view.Librairian.index();
                     }
