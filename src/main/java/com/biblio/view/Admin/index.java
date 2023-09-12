@@ -4,6 +4,7 @@ import com.biblio.app.Controllers.BookController;
 import com.biblio.app.Enums.Language;
 import com.biblio.app.Models.*;
 import com.biblio.dao.AuthorDao;
+import com.biblio.dao.BookDao;
 import com.biblio.dao.CategoryDao;
 import com.biblio.view.core.ButtonEditor;
 import com.biblio.view.core.ButtonRenderer;
@@ -13,10 +14,7 @@ import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,14 +28,17 @@ public class index extends JFrame implements ActionListener {
     private BookController bc; // Book Controller
 
     private List<JButton> deleteTableButtons = new ArrayList<JButton>(), updateTableButtons = new ArrayList<JButton>();
-    private JButton statistic, all_book, available_book, brr_book, lost_book, user, awaiting_list, logout;
+    private JButton statistic, all_book,search, available_book, brr_book, lost_book, user, awaiting_list, logout;
     private JButton add_book_button, edit_book_button, delete_book_button;
     private JTable bookTable;
     private DefaultTableModel tableModel;
 
-    String CurrentBookClicked = "";
+    String CurrentBookClicked = null;
+    int CurrentBookClickedRow = -1;
 
-    private AddBookDialog addBookDialog;
+    private AddBookDialog addBookDialog,updateBookDialog;
+    private EditBookDialog editBookDialog;
+    private deleteBookDialog deleteBookDialog;
 
 
     public index(User u) throws SQLException {
@@ -60,6 +61,7 @@ public class index extends JFrame implements ActionListener {
 
         ImageIcon Statistic_icon = new ImageIcon("assets/icon/statistics.png");
         ImageIcon Book_icon = new ImageIcon("assets/icon/book.png");
+        ImageIcon Search_icon = new ImageIcon("assets/icon/search.png");
         ImageIcon Available_icon = new ImageIcon("assets/icon/available.png");
         ImageIcon Borrowed_icon = new ImageIcon("assets/icon/borrow.png");
         ImageIcon Lost_icon = new ImageIcon("assets/icon/lost.png");
@@ -69,6 +71,7 @@ public class index extends JFrame implements ActionListener {
 
         statistic = new JButton("  Statistic", Statistic_icon);
         all_book = new JButton("  All books", Book_icon);
+        search = new JButton(" Search", Search_icon);
         available_book = new JButton("  Available books", Available_icon);
         brr_book = new JButton("  Borrowed books", Borrowed_icon);
         lost_book = new JButton("  Lost books", Lost_icon);
@@ -78,6 +81,7 @@ public class index extends JFrame implements ActionListener {
 
         setButtons(statistic);
         setButtons(all_book);
+        setButtons(search);
         setButtons(available_book);
         setButtons(brr_book);
         setButtons(lost_book);
@@ -115,12 +119,13 @@ public class index extends JFrame implements ActionListener {
 
         statistic.setBounds(50, 100 + y, 250, 30);
         all_book.setBounds(50, 155 + y, 250, 30);
-        available_book.setBounds(50, 210 + y, 200, 30);
-        brr_book.setBounds(50, 265 + y, 250, 30);
-        lost_book.setBounds(50, 320 + y, 250, 30);
-        user.setBounds(50, 375 + y, 250, 30);
-        awaiting_list.setBounds(50, 430 + y, 250, 30);
-        logout.setBounds(50, 485 + y, 250, 30);
+        search.setBounds(50, 210 + y, 200, 30);
+        available_book.setBounds(50, 265 + y, 250, 30);
+        brr_book.setBounds(50, 320 + y, 250, 30);
+        lost_book.setBounds(50, 375 + y, 250, 30);
+        user.setBounds(50, 430 + y, 250, 30);
+        awaiting_list.setBounds(50, 485 + y, 250, 30);
+        logout.setBounds(50, 540 + y, 250, 30);
 
         statistic.addActionListener(this);
         all_book.addActionListener(this);
@@ -138,6 +143,7 @@ public class index extends JFrame implements ActionListener {
         add(logoLabel);
         add(statistic);
         add(all_book);
+        add(search);
         add(available_book);
         add(brr_book);
         add(lost_book);
@@ -147,10 +153,10 @@ public class index extends JFrame implements ActionListener {
         setVisible(true);
 
         // ouharrioutman@gmail.com
-            // 68767498739879
+        // 68767498739879
     }
 
-    private void displayBook() {
+    private void displayBook() throws SQLException {
         JLabel book_label = new JLabel("All Books :");
         book_label.setFont(new Font("Arial", Font.PLAIN, 25));
         book_label.setBounds(400, 140, 300, 50);
@@ -185,12 +191,38 @@ public class index extends JFrame implements ActionListener {
         delete_book_button.setBounds(1250, 150, 50, 24);
 
         addBookDialog = new AddBookDialog(this);
+        editBookDialog = new EditBookDialog(this);
+        deleteBookDialog = new deleteBookDialog();
 
         add_book_button.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         addBookDialog.setVisible(true);
+                    }
+                }
+        );
+        edit_book_button.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        try {
+                            editBookDialog.display();
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                }
+        );
+        delete_book_button.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        try {
+                            deleteBookDialog.display();
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
                     }
                 }
         );
@@ -223,6 +255,7 @@ public class index extends JFrame implements ActionListener {
                 int row = bookTable.rowAtPoint(e.getPoint());
                 Object cellValue = bookTable.getValueAt(row, 0);
                 CurrentBookClicked = cellValue.toString();
+                CurrentBookClickedRow = row;
             }
         });
 
@@ -237,29 +270,14 @@ public class index extends JFrame implements ActionListener {
         repaint();
     }
 
-
-    private int incrementY(int y) {
-        y = y + 100;
-        return y + 100;
-    }
-
-    private JButton setButtons(JButton butt) {
-        butt.setBorderPainted(false);
-        butt.setHorizontalAlignment(SwingConstants.LEFT);
-        butt.setContentAreaFilled(false);
-        butt.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
-        Font police = new Font("SansSerif", Font.BOLD, 15);
-        butt.setFont(police);
-
-        return butt;
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("jnf");
         if (e.getSource() == all_book) {
-            displayBook();
+            try {
+                displayBook();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
         } else if (e.getSource() == logout) {
             int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to log out?", "Logout Confirmation", JOptionPane.YES_NO_OPTION);
 
@@ -268,22 +286,8 @@ public class index extends JFrame implements ActionListener {
                 new com.biblio.view.Authentication.Signing();
             }
 
-        } else {
-            for (JButton updateButton : updateTableButtons) {
-                if (e.getSource() == updateButton) {
-                    System.out.println("update");
-                    // Ajoutez ici la logique de mise à jour
-                }
-            }
-            for (JButton deleteButton : deleteTableButtons) {
-                if (e.getSource() == deleteButton) {
-                    System.out.println("delete");
-                    // Ajoutez ici la logique de mise à jour
-                }
-            }
         }
     }
-
 
     private class AddBookDialog extends JDialog {
         public AddBookDialog(Frame owner) {
@@ -356,7 +360,6 @@ public class index extends JFrame implements ActionListener {
             category_field = new JList<>(categories);
 
             JButton add_book = new JButton("Add Book");
-            JButton cancel = new JButton("Cancel");
 
             isbn.setBounds(50, 50, 400, 30);
             isbn_field.setBounds(50, 80, 400, 30);
@@ -382,10 +385,13 @@ public class index extends JFrame implements ActionListener {
             author.setBounds(50, 470, 400, 30);
             author_field.setBounds(50, 500, 400, authors_size);
 
-            category.setBounds(50, 530, 400, 30);
-            category_field.setBounds(50, 560, 400, categories_size);
+            category.setBounds(50, 500 + authors_size, 400, 30);
+            category_field.setBounds(50, 530 + authors_size, 400, categories_size);
 
             add_book.setBounds(350, 630, 100, 30);
+            add_book.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            add_book.setContentAreaFilled(false);
+            add_book.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
             add_book.addActionListener(new ActionListener() {
                 @Override
@@ -412,12 +418,15 @@ public class index extends JFrame implements ActionListener {
 
                     try {
                         Book b = bc.addBook(isbn, title, description, language, quantity, pages, edition, authorIds, categoryIds);
-                        if(b!=null){
+                        if (b != null) {
                             tableModel.addRow(new Object[]{isbn, title, pages, edition, quantity, language, concatenateTexts(selectedAuthors), concatenateTexts(selectedCategories), description});
                             JOptionPane.showMessageDialog(null, "Book added successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+                            setVisible(false);
+                            addBookDialog.removeAll();
                             revalidate();
                             repaint();
                             addBookDialog.dispose();
+                            remove(addBookDialog);
                         }
                     } catch (SQLException throwables) {
                         throwables.printStackTrace();
@@ -444,7 +453,225 @@ public class index extends JFrame implements ActionListener {
             add(category);
             add(category_field);
             add(add_book);
-//            add(cancel);
+        }
+    }
+
+    private class EditBookDialog extends JDialog {
+        public EditBookDialog(Frame owner) {
+            super(owner, "Edit Book", true);
+            setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+            setSize(500, 720);
+            setLocationRelativeTo(null);
+            setLayout(null);
+        }
+
+        public void display() throws SQLException {
+            if (CurrentBookClicked == null) {
+                JOptionPane.showMessageDialog(null, "Please select a book to edit", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            Book b = bc.find(CurrentBookClicked);
+
+            if (b == null) return;
+
+            String[] categories;
+            String[] authors;
+
+            try (AuthorDao authorDao = new AuthorDao()) {
+                authors = authorDao.getAllAuthors();
+            } catch (Exception throwables) {
+                throwables.printStackTrace();
+                authors = new String[0];
+            }
+
+            try (CategoryDao categoryDao = new CategoryDao()) {
+                categories = categoryDao.getAllCategories();
+            } catch (Exception throwables) {
+                throwables.printStackTrace();
+                categories = new String[0];
+            }
+
+            int authors_size = 20 * authors.length;
+            int categories_size = 20 * categories.length;
+
+            JLabel isbn, quantity, pages, title, edition, language, description, author, category;
+            JTextField isbn_field, quantity_field, pages_field, title_field, edition_field;
+            JTextArea description_field;
+
+            JComboBox<Language> language_field;
+            JList<String> author_field;
+            JList<String> category_field;
+
+            isbn = new JLabel("ISBN");
+            quantity = new JLabel("Quantity");
+            pages = new JLabel("Pages");
+            title = new JLabel("Title");
+            edition = new JLabel("Edition");
+            language = new JLabel("Language");
+            description = new JLabel("Description");
+            author = new JLabel("Author");
+            category = new JLabel("Category");
+
+            isbn_field = new JTextField();
+            quantity_field = new JTextField();
+            pages_field = new JTextField();
+            title_field = new JTextField();
+            edition_field = new JTextField();
+            description_field = new JTextArea();
+
+            System.out.println(b.getEdition());
+
+            isbn_field.setText(b.getIsbn());
+            quantity_field.setText(String.valueOf(b.getQuantities()));
+            pages_field.setText(String.valueOf(b.getPages()));
+            title_field.setText(b.getTitle());
+            edition_field.setText(b.getEdition());
+            description_field.setText(b.getDescription());
+
+            language_field = new JComboBox<>(Language.values());
+            author_field = new JList<>(authors);
+            category_field = new JList<>(categories);
+
+            String[] selectedAuthors = b.getAuthors().stream()
+                    .map(Author::getFullName)
+                    .toArray(String[]::new);
+            author_field.setSelectedValue(selectedAuthors, true);
+
+            String[] selectedCategories = b.getCategories().stream()
+                    .map(Category::getCat)
+                    .toArray(String[]::new);
+            category_field.setSelectedValue(selectedCategories, true);
+
+            JButton update_book = new JButton("Update Book");
+
+            isbn.setBounds(50, 50, 400, 30);
+            isbn_field.setBounds(50, 80, 400, 30);
+
+            title.setBounds(50, 110, 400, 30);
+            title_field.setBounds(50, 140, 400, 30);
+
+            pages.setBounds(50, 170, 400, 30);
+            pages_field.setBounds(50, 200, 400, 30);
+
+            edition.setBounds(50, 230, 400, 30);
+            edition_field.setBounds(50, 260, 400, 30);
+            edition_field.setText(b.getEdition());
+
+            quantity.setBounds(50, 290, 400, 30);
+            quantity_field.setBounds(50, 320, 400, 30);
+
+            language.setBounds(50, 350, 400, 30);
+            language_field.setBounds(50, 380, 400, 30);
+
+            description.setBounds(50, 410, 400, 30);
+            description_field.setBounds(50, 440, 400, 30);
+
+            author.setBounds(50, 470, 400, 30);
+            author_field.setBounds(50, 500, 400, authors_size);
+
+            category.setBounds(50, 500 + authors_size, 400, 30);
+            category_field.setBounds(50, 530 + authors_size, 400, categories_size);
+
+            update_book.setBounds(350, 630, 100, 30);
+            update_book.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            update_book.setContentAreaFilled(false);
+            update_book.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+            JComboBox<Language> finalLanguage_field = language_field;
+            JList<String> finalAuthor_field = author_field;
+            JList<String> finalCategory_field = category_field;
+            update_book.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String isbn = isbn_field.getText();
+                    String title = title_field.getText();
+                    int pages = Integer.parseInt(pages_field.getText());
+                    String edition = edition_field.getText();
+                    int quantity = Integer.parseInt(quantity_field.getText());
+                    Language language = (Language) finalLanguage_field.getSelectedItem();
+                    String description = description_field.getText();
+                    String[] selectedAuthors = finalAuthor_field.getSelectedValuesList().toArray(new String[0]);
+                    String[] selectedCategories = finalCategory_field.getSelectedValuesList().toArray(new String[0]);
+
+                    int[] authorIds = new int[selectedAuthors.length];
+                    for (int i = 0; i < selectedAuthors.length; i++) {
+                        authorIds[i] = extractId(selectedAuthors[i]);
+                    }
+
+                    int[] categoryIds = new int[selectedCategories.length];
+                    for (int i = 0; i < selectedCategories.length; i++) {
+                        categoryIds[i] = extractId(selectedCategories[i]);
+                    }
+
+                    try {
+                        Book b = bc.updateBook(isbn, title, description, language, quantity, pages, edition, authorIds, categoryIds);
+                        if (b != null) {
+                            tableModel.removeRow(CurrentBookClickedRow);
+                            tableModel.addRow(new Object[]{CurrentBookClicked, title, pages, edition, quantity, language, concatenateTexts(selectedAuthors), concatenateTexts(selectedCategories), description});
+                            CurrentBookClicked = null;
+                            CurrentBookClickedRow = -1;
+                            JOptionPane.showMessageDialog(null, "Book added successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+                            setVisible(false);
+                            editBookDialog.removeAll();
+                            revalidate();
+                            repaint();
+                            editBookDialog.dispose();
+                            remove(editBookDialog);
+                        } else System.out.println("Book not updated");
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                }
+            });
+
+            addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    dispose();
+                }
+            });
+
+            add(isbn);
+            add(isbn_field);
+            add(title);
+            add(title_field);
+            add(pages);
+            add(pages_field);
+            add(edition);
+            add(edition_field);
+            add(quantity);
+            add(quantity_field);
+            add(language);
+            add(language_field);
+            add(description);
+            add(description_field);
+            add(author);
+            add(author_field);
+            add(category);
+            add(category_field);
+            add(update_book);
+
+            setVisible(true);
+        }
+    }
+
+    private class deleteBookDialog extends JDialog {
+        public deleteBookDialog(){}
+
+        public void display() throws SQLException {
+            if (CurrentBookClicked == null) {
+                JOptionPane.showMessageDialog(null, "Please select a book to delete", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this Book (ISBN:"+ CurrentBookClicked+") ?", "Logout Confirmation", JOptionPane.YES_NO_OPTION);
+
+            if (choice == JOptionPane.YES_OPTION) {
+                if(bc.deleteBook(CurrentBookClicked)){
+                    tableModel.removeRow(CurrentBookClickedRow);
+                }
+            }
         }
     }
 
@@ -480,7 +707,17 @@ public class index extends JFrame implements ActionListener {
     }
 
 
+    private JButton setButtons(JButton butt) {
+        butt.setBorderPainted(false);
+        butt.setHorizontalAlignment(SwingConstants.LEFT);
+        butt.setContentAreaFilled(false);
+        butt.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
+        Font police = new Font("SansSerif", Font.BOLD, 15);
+        butt.setFont(police);
+
+        return butt;
+    }
 
 
 }

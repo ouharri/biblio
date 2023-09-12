@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="974a4e58-64ac-46a1-b270-b71322b9e800" name="Changes" comment="L-3 L-4 l-5 progress">
+      <change afterPath="$PROJECT_DIR$/assets/icon/search.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/view/Admin/index.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/view/Admin/index.java" afterDir="false" />
     </list>
@@ -130,7 +131,7 @@
       <workItem from="1694419237663" duration="356000" />
       <workItem from="1694419950147" duration="37904000" />
       <workItem from="1694506786482" duration="89000" />
-      <workItem from="1694506902813" duration="29208000" />
+      <workItem from="1694506902813" duration="38112000" />
     </task>
     <task id="LOCAL-00001" summary="L-2 migrate to javaFX">
       <created>1693864551197</created>
@@ -238,7 +239,15 @@
       <option name="project" value="LOCAL" />
       <updated>1694540071119</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="L-3 L-4 l-5 progress">
+      <option name="closed" value="true" />
+      <created>1694541693312</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1694541693314</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
