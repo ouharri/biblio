@@ -187,8 +187,6 @@ public class BookController {
 
         throw new NoQuantityBookException();
     }
-
-
     /**
      * Registers a lost book in the database.
      *
@@ -211,8 +209,7 @@ public class BookController {
      * @param requested_ad The date the loss was reported.
      * @return `true` if the book was successfully updated, `false` otherwise.
      */
-    public boolean updateLost(String isbn,String book_reference,String description, LostStatus status,java.sql.Timestamp requested_ad) throws Exception {
+    public boolean updateLost(String isbn, String book_reference, String description, LostStatus status, java.sql.Timestamp requested_ad) throws Exception {
         return lostDao.updateLost(isbn,book_reference, description, status,requested_ad) != null;
     }
-
 }

@@ -1,13 +1,11 @@
 package com.biblio.view.Admin;
 
+import com.biblio.app.Controllers.AnalysisController;
 import com.biblio.app.Controllers.BookController;
 import com.biblio.app.Enums.Language;
 import com.biblio.app.Models.*;
 import com.biblio.dao.AuthorDao;
-import com.biblio.dao.BookDao;
 import com.biblio.dao.CategoryDao;
-import com.biblio.view.core.ButtonEditor;
-import com.biblio.view.core.ButtonRenderer;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
@@ -16,33 +14,33 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class index extends JFrame implements ActionListener {
 
     private User User;
-    private BookController bc; // Book Controller
-
-    private List<JButton> deleteTableButtons = new ArrayList<JButton>(), updateTableButtons = new ArrayList<JButton>();
-    private JButton statistic, all_book,search, available_book, brr_book, lost_book, user, awaiting_list, logout;
-    private JButton add_book_button, edit_book_button, delete_book_button;
+    private BookController bc;
+    private AnalysisController ac;
+    private JButton statistic, all_book, search, available_book, brr_book, lost_book, user, awaiting_list, logout;
+    private JButton add_book_button, edit_book_button, delete_book_button, search_book_button;
     private JTable bookTable;
+    private JScrollPane scrollPane;
+    private JLabel book_label;
     private DefaultTableModel tableModel;
+    private JTextField search_field;
 
     String CurrentBookClicked = null;
     int CurrentBookClickedRow = -1;
 
-    private AddBookDialog addBookDialog,updateBookDialog;
+    private AddBookDialog addBookDialog, updateBookDialog;
     private EditBookDialog editBookDialog;
     private deleteBookDialog deleteBookDialog;
 
 
     public index(User u) throws SQLException {
         bc = new BookController();
+        ac = new AnalysisController();
         User = u;
 
         setTitle("Admin");
@@ -92,8 +90,6 @@ public class index extends JFrame implements ActionListener {
         int y = 120;
         int y2 = 10;
 
-        System.out.println(screenHeight);
-
         JLabel logoLabel = new JLabel(new ImageIcon(UserLogo));
         logoLabel.setBounds(50, 50 + y2, 64, 64);
 
@@ -128,6 +124,7 @@ public class index extends JFrame implements ActionListener {
         logout.setBounds(50, 540 + y, 250, 30);
 
         statistic.addActionListener(this);
+        search.addActionListener(this);
         all_book.addActionListener(this);
         available_book.addActionListener(this);
         brr_book.addActionListener(this);
@@ -156,8 +153,70 @@ public class index extends JFrame implements ActionListener {
         // 68767498739879
     }
 
-    private void displayBook() throws SQLException {
-        JLabel book_label = new JLabel("All Books :");
+
+    private void refresh() {
+        if (book_label != null) remove(book_label);
+        if (add_book_button != null) remove(add_book_button);
+        if (edit_book_button != null) remove(edit_book_button);
+        if (delete_book_button != null) remove(delete_book_button);
+        if (scrollPane != null) remove(scrollPane);
+
+        if (search_field != null) remove(search_field);
+        if (search_book_button != null) remove(search_book_button);
+
+
+        revalidate();
+        repaint();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == statistic){
+            refresh();
+            displayStatistics();
+        }else if (e.getSource() == all_book) {
+            refresh();
+            try {
+                displayAllBook();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        } else if (e.getSource() == search) {
+            refresh();
+            try {
+                displaySearchBook();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+
+        } else if (e.getSource() == available_book) {
+            refresh();
+            try {
+                displayAvailableBook();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        } else if (e.getSource() == brr_book) {
+            refresh();
+        } else if (e.getSource() == lost_book) {
+            refresh();
+        } else if (e.getSource() == user) {
+            refresh();
+        } else if (e.getSource() == awaiting_list) {
+            refresh();
+        } else if (e.getSource() == logout) {
+            int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to log out?", "Logout Confirmation", JOptionPane.YES_NO_OPTION);
+
+            if (choice == JOptionPane.YES_OPTION) {
+                dispose();
+                new com.biblio.view.Authentication.Signing();
+            }
+        }
+    }
+
+
+    private void displayAllBook() throws SQLException {
+        book_label = new JLabel("All Books :");
         book_label.setFont(new Font("Arial", Font.PLAIN, 25));
         book_label.setBounds(400, 140, 300, 50);
 
@@ -226,39 +285,14 @@ public class index extends JFrame implements ActionListener {
                     }
                 }
         );
-        edit_book_button.addActionListener(this);
-        delete_book_button.addActionListener(this);
 
-        JScrollPane scrollPane = new JScrollPane(bookTable);
+        scrollPane = new JScrollPane(bookTable);
         scrollPane.setBounds(400, 190, 1000, 700);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
 
         List<Book> books = bc.getAlBooks();
 
-        for (Book book : books) {
-            String isbn = book.getIsbn();
-            String title = book.getTitle();
-            int Pages = book.getPages();
-            String Edition = book.getEdition();
-            int Quantity = book.getQuantities();
-            String Language = book.getLanguage().toString();
-            String Description = book.getDescription();
-            String author = book.getAuthors().stream().map(Author::getFullName).collect(Collectors.joining(", "));
-            String category = book.getCategories().stream().map(Category::getCat).collect(Collectors.joining(", "));
-
-            tableModel.addRow(new Object[]{isbn, title, Pages, Edition, Quantity, Language, author, category, Description});
-        }
-
-        bookTable.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int row = bookTable.rowAtPoint(e.getPoint());
-                Object cellValue = bookTable.getValueAt(row, 0);
-                CurrentBookClicked = cellValue.toString();
-                CurrentBookClickedRow = row;
-            }
-        });
-
+        addBooksToTable(books);
 
         add(book_label);
         add(add_book_button);
@@ -266,28 +300,232 @@ public class index extends JFrame implements ActionListener {
         add(delete_book_button);
         add(scrollPane);
 
+
         revalidate();
         repaint();
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == all_book) {
-            try {
-                displayBook();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
-        } else if (e.getSource() == logout) {
-            int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to log out?", "Logout Confirmation", JOptionPane.YES_NO_OPTION);
+    private void displayAvailableBook() throws SQLException {
+        book_label = new JLabel("All Books :");
+        book_label.setFont(new Font("Arial", Font.PLAIN, 25));
+        book_label.setBounds(400, 140, 300, 50);
 
-            if (choice == JOptionPane.YES_OPTION) {
-                dispose();
-                new com.biblio.view.Authentication.Signing();
-            }
+        tableModel = new DefaultTableModel(new String[]{"ISBN", "Title", "Pages", "Edition", "Quantity", "Language", "Author", "Category", "Description"}, 0);
+        bookTable = new JTable(tableModel);
+        bookTable.setRowHeight(30);
 
-        }
+        bookTable.getColumnModel().getColumn(3).setPreferredWidth(20);
+        bookTable.getColumnModel().getColumn(4).setPreferredWidth(3);
+        bookTable.getColumnModel().getColumn(5).setPreferredWidth(25);
+
+        ImageIcon add_book_icon = new ImageIcon("assets/icon/add_book.png");
+        ImageIcon edit_book_icon = new ImageIcon("assets/icon/edit_book.png");
+        ImageIcon delete_book_icon = new ImageIcon("assets/icon/delete_book.png");
+
+        add_book_button = new JButton("", add_book_icon);
+        edit_book_button = new JButton("", edit_book_icon);
+        delete_book_button = new JButton("", delete_book_icon);
+
+
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setBackground(Color.WHITE);
+        bookTable.setDefaultRenderer(Object.class, renderer);
+
+        setButtons(add_book_button);
+        setButtons(edit_book_button);
+        setButtons(delete_book_button);
+
+        add_book_button.setBounds(1350, 150, 50, 24);
+        edit_book_button.setBounds(1300, 150, 50, 24);
+        delete_book_button.setBounds(1250, 150, 50, 24);
+
+        addBookDialog = new AddBookDialog(this);
+        editBookDialog = new EditBookDialog(this);
+        deleteBookDialog = new deleteBookDialog();
+
+        add_book_button.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        addBookDialog.setVisible(true);
+                    }
+                }
+        );
+        edit_book_button.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        try {
+                            editBookDialog.display();
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                }
+        );
+        delete_book_button.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        try {
+                            deleteBookDialog.display();
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                }
+        );
+
+        scrollPane = new JScrollPane(bookTable);
+        scrollPane.setBounds(400, 190, 1000, 700);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
+
+        List<Book> books = bc.getAlBooks();
+
+        addBooksToTable(books);
+
+        add(book_label);
+        add(add_book_button);
+        add(edit_book_button);
+        add(delete_book_button);
+        add(scrollPane);
+
+
+        revalidate();
+        repaint();
     }
+
+    private void displaySearchBook() throws SQLException {
+        book_label = new JLabel("Search In Books :");
+        book_label.setFont(new Font("Arial", Font.PLAIN, 25));
+        book_label.setBounds(400, 140, 300, 50);
+
+        tableModel = new DefaultTableModel(new String[]{"ISBN", "Title", "Pages", "Edition", "Quantity", "Language", "Author", "Category", "Description"}, 0);
+        bookTable = new JTable(tableModel);
+        bookTable.setRowHeight(30);
+
+        bookTable.getColumnModel().getColumn(3).setPreferredWidth(20);
+        bookTable.getColumnModel().getColumn(4).setPreferredWidth(3);
+        bookTable.getColumnModel().getColumn(5).setPreferredWidth(25);
+
+        search_field = new JTextField();
+
+        ImageIcon search_book_icon = new ImageIcon("assets/icon/loupe.png");
+        ImageIcon edit_book_icon = new ImageIcon("assets/icon/edit_book.png");
+        ImageIcon delete_book_icon = new ImageIcon("assets/icon/delete_book.png");
+
+        search_book_button = new JButton("", search_book_icon);
+        edit_book_button = new JButton("", edit_book_icon);
+        delete_book_button = new JButton("", delete_book_icon);
+
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setBackground(Color.WHITE);
+        bookTable.setDefaultRenderer(Object.class, renderer);
+
+        setButtons(search_book_button);
+        setButtons(edit_book_button);
+        setButtons(delete_book_button);
+
+        search_field.setBounds(1050, 145, 200, 30);
+
+        search_book_button.setBounds(1250, 150, 50, 24);
+        edit_book_button.setBounds(1300, 150, 50, 24);
+        delete_book_button.setBounds(1350, 150, 50, 24);
+
+        editBookDialog = new EditBookDialog(this);
+        deleteBookDialog = new deleteBookDialog();
+
+        search_book_button.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String search = search_field.getText();
+                        List<Book> books = null;
+                        try {
+                            books = bc.searchBook(search);
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                        removeAllRowFromTable();
+                        addBooksToTable(books);
+                    }
+                }
+        );
+        edit_book_button.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        try {
+                            editBookDialog.display();
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                }
+        );
+        delete_book_button.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        try {
+                            deleteBookDialog.display();
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                }
+        );
+
+        scrollPane = new JScrollPane(bookTable);
+        scrollPane.setBounds(400, 190, 1000, 700);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
+
+
+        List<Book> books = bc.getAlBooks();
+
+        addBooksToTable(books);
+
+
+        add(book_label);
+        add(search_field);
+        add(search_book_button);
+        add(edit_book_button);
+        add(delete_book_button);
+        add(scrollPane);
+
+
+        revalidate();
+        repaint();
+        setVisible(true);
+    }
+
+    private void displayStatistics() {
+        book_label = new JLabel("Statistics :");
+        book_label.setFont(new Font("Arial", Font.PLAIN, 25));
+        book_label.setBounds(400, 140, 300, 50);
+
+        int TotalBooks = ac.getTotalBooks();
+        int TotalAuthors = ac.getTotalAuthors();
+        int TotalCategories = ac.getTotalCategories();
+        int TotalUsers = ac.getTotalUsers();
+        int TotalBorrowedBooks = ac.getTotalBorrowedBooks();
+        int TotalAvailableBooks = ac.getTotalAvailableBooks();
+        int TotalLostBooks = ac.getTotalLostBooks();
+        int TotalBorrowedNotReturnedBooks = ac.getTotalBorrowedNotReturnedBooks();
+        int TotalBorrowedUsers = ac.getTotalBorrowedUsers();
+        int TotalAvailableUsers = ac.getTotalAvailableUsers();
+        int TotalStock = ac.getTotalStock();
+        int TotalReturnedBooks = ac.getTotalReturnedBooks();
+
+
+
+
+
+        add(book_label);
+        revalidate();
+        repaint();
+    }
+
 
     private class AddBookDialog extends JDialog {
         public AddBookDialog(Frame owner) {
@@ -657,7 +895,8 @@ public class index extends JFrame implements ActionListener {
     }
 
     private class deleteBookDialog extends JDialog {
-        public deleteBookDialog(){}
+        public deleteBookDialog() {
+        }
 
         public void display() throws SQLException {
             if (CurrentBookClicked == null) {
@@ -665,14 +904,15 @@ public class index extends JFrame implements ActionListener {
                 return;
             }
 
-            int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this Book (ISBN:"+ CurrentBookClicked+") ?", "Logout Confirmation", JOptionPane.YES_NO_OPTION);
+            int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this Book (ISBN:" + CurrentBookClicked + ") ?", "Logout Confirmation", JOptionPane.YES_NO_OPTION);
 
             if (choice == JOptionPane.YES_OPTION) {
-                if(bc.deleteBook(CurrentBookClicked)){
+                if (bc.deleteBook(CurrentBookClicked)) {
                     tableModel.removeRow(CurrentBookClickedRow);
                 }
             }
         }
+
     }
 
     private int extractId(String authorString) {
@@ -680,8 +920,7 @@ public class index extends JFrame implements ActionListener {
 
         if (parts.length == 2) {
             try {
-                int id = Integer.parseInt(parts[0].trim());
-                return id;
+                return Integer.parseInt(parts[0].trim());
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
@@ -707,7 +946,41 @@ public class index extends JFrame implements ActionListener {
     }
 
 
-    private JButton setButtons(JButton butt) {
+    private void removeAllRowFromTable() {
+        int rowCount = tableModel.getRowCount();
+        for (int i = rowCount - 1; i >= 0; i--) {
+            tableModel.removeRow(i);
+        }
+    }
+
+    private void addBooksToTable(List<Book> books) {
+        removeAllRowFromTable();
+        for (Book book : books) {
+            String isbn = book.getIsbn();
+            String title = book.getTitle();
+            int Pages = book.getPages();
+            String Edition = book.getEdition();
+            int Quantity = book.getQuantities();
+            String Language = book.getLanguage().toString();
+            String Description = book.getDescription();
+            String author = book.getAuthors().stream().map(Author::getFullName).collect(Collectors.joining(", "));
+            String category = book.getCategories().stream().map(Category::getCat).collect(Collectors.joining(", "));
+
+            tableModel.addRow(new Object[]{isbn, title, Pages, Edition, Quantity, Language, author, category, Description});
+        }
+
+        bookTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int row = bookTable.rowAtPoint(e.getPoint());
+                Object cellValue = bookTable.getValueAt(row, 0);
+                CurrentBookClicked = cellValue.toString();
+                CurrentBookClickedRow = row;
+            }
+        });
+    }
+
+    private void setButtons(JButton butt) {
         butt.setBorderPainted(false);
         butt.setHorizontalAlignment(SwingConstants.LEFT);
         butt.setContentAreaFilled(false);
@@ -716,7 +989,6 @@ public class index extends JFrame implements ActionListener {
         Font police = new Font("SansSerif", Font.BOLD, 15);
         butt.setFont(police);
 
-        return butt;
     }
 
 

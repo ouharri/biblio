@@ -5,8 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="974a4e58-64ac-46a1-b270-b71322b9e800" name="Changes" comment="L-3 L-4 l-5 progress">
-      <change afterPath="$PROJECT_DIR$/assets/icon/search.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/icon/loupe.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/biblio/view/Book/deleteBookDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/app/Controllers/AnalysisController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/Controllers/AnalysisController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/app/Controllers/BookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/app/Controllers/BookController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/dao/BookDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/dao/BookDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/view/Admin/index.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/view/Admin/index.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -26,6 +31,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$USER_HOME$/.jdks/openjdk-20.0.1/lib/src.zip!/java.desktop/javax/swing/table/DefaultTableModel.java" root0="SKIP_INSPECTION" />
   </component>
   <component name="ProjectId" id="2Uww67VqEwCydExOtMWS6UGH8Md" />
   <component name="ProjectLevelVcsManager">
@@ -131,7 +139,7 @@
       <workItem from="1694419237663" duration="356000" />
       <workItem from="1694419950147" duration="37904000" />
       <workItem from="1694506786482" duration="89000" />
-      <workItem from="1694506902813" duration="38112000" />
+      <workItem from="1694506902813" duration="46634000" />
     </task>
     <task id="LOCAL-00001" summary="L-2 migrate to javaFX">
       <created>1693864551197</created>
@@ -247,7 +255,15 @@
       <option name="project" value="LOCAL" />
       <updated>1694541693314</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="L-3 L-4 l-5 progress">
+      <option name="closed" value="true" />
+      <created>1694560403223</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1694560403223</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

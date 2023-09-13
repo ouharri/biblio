@@ -693,4 +693,202 @@ public final class BookDao extends Model {
         }
     }
 
+    public int getTotalBooks() {
+        try {
+            String query = "SELECT COUNT(*) FROM books WHERE delete_at IS NULL";
+            PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int getTotalLostBooks() {
+        try {
+            String query = "SELECT COUNT(*) FROM books WHERE delete_at IS NULL " +
+                    "AND isbn IN (SELECT book FROM lost_books WHERE actual_status = 'still_lost')";
+            PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int getTotalBorrowedBooks() {
+        try {
+            String query = "SELECT COUNT(*) FROM books WHERE delete_at IS NULL " +
+                    "AND isbn IN (SELECT book FROM borrowed_books WHERE return_date IS NULL)";
+            PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int getTotalAvailableBooks() {
+        try {
+            String query = "SELECT COUNT(*) FROM books WHERE delete_at IS NULL " +
+                    "AND isbn NOT IN (SELECT book FROM borrowed_books WHERE return_date IS NULL) " +
+                    "AND isbn NOT IN (SELECT book FROM lost_books WHERE actual_status = 'still_lost')";
+            PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int getTotalBorrowedNotReturnedBooks() {
+        try {
+            String query = "SELECT COUNT(*) FROM books WHERE delete_at IS NULL " +
+                    "AND isbn IN (SELECT book FROM borrowed_books WHERE return_date IS NULL) " +
+                    "AND isbn NOT IN (SELECT book FROM lost_books WHERE actual_status = 'still_lost')";
+            PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int getTotalStock() {
+        try {
+            String query = "SELECT SUM(b.quantities) FROM books b " +
+                    "WHERE b.delete_at IS NULL " +
+                    "AND b.isbn NOT IN (SELECT book FROM lost_books WHERE actual_status = 'still_lost')";
+            PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int getTotalReturnedBooks() {
+        try {
+            String query = "SELECT COUNT(*) FROM borrowed_books WHERE return_date IS NOT NULL;";
+            PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int getTotalAuthors() {
+        try {
+            String query = "SELECT COUNT(*) FROM authors;";
+            PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int getTotalCategories() {
+        try {
+            String query = "SELECT COUNT(*) FROM categories;";
+            PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    /**
+     * Gets the total number of users in the database.
+     *
+     * @return The total number of users.
+     */
+    public int getTotalUsers() {
+        try {
+            String query = "SELECT COUNT(*) FROM users;";
+            PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    /**
+     * Gets the total number of users who have borrowed books that have not been returned in the database.
+     *
+     * @return The total number of users with borrowed books not returned.
+     */
+    public int getTotalBorrowedUsers() {
+        try {
+            String query = "SELECT COUNT(DISTINCT u.cnie) " +
+                    "FROM users u " +
+                    "INNER JOIN borrowed_books bb ON u.cnie = bb.user " +
+                    "WHERE bb.return_date IS NULL;";
+            PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    /**
+     * Gets the total number of users who have not borrowed any books in the database.
+     *
+     * @return The total number of users with no borrowed books.
+     */
+    public int getTotalAvailableUsers() {
+        try {
+            String query = "SELECT COUNT(*) " +
+                    "FROM users u " +
+                    "WHERE u.cnie NOT IN (SELECT DISTINCT bb.user FROM borrowed_books bb);";
+            PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+
+
 }
