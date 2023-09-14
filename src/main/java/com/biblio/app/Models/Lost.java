@@ -17,7 +17,7 @@ public class Lost extends Book{
 	private String description = null;
 	private LostStatus actual_status = null;
 
-	public void setLost(int id,String book_reference, java.sql.Date loastDate, String description, LostStatus status){
+	public void setLost(String book_reference, java.sql.Date loastDate, String description, LostStatus status){
 		this.book_reference = book_reference;
 		this.lost_date = loastDate;
 		this.description = description;

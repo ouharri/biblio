@@ -3,6 +3,8 @@ package com.biblio.app.Controllers;
 import com.biblio.app.Enums.LostStatus;
 import com.biblio.app.Exceptions.NoQuantityBookException;
 import com.biblio.app.Models.Book;
+import com.biblio.app.Models.Loan;
+import com.biblio.app.Models.Lost;
 import com.biblio.dao.*;
 import com.biblio.app.Enums.Language;
 
@@ -46,16 +48,16 @@ public class BookController {
      *
      * @return A list of lost books.
      */
-    public List<Book> getLostBooks() {
-        return bookDao.getLostBooks();
+    public List<Lost> getLostBooks() {
+        return lostDao.getLostBooks();
     }
     /**
      * Retrieves a list of all borrowed books.
      *
      * @return A list of borrowed books.
      */
-    public List<Book> getBorrowedBooks() {
-        return bookDao.getBorrowedBooks();
+    public List<Loan> getBorrowedBooks() {
+        return loanDao.getBorrowedBooks();
     }
     /**
      * Retrieves a list of all borrowed books by a user.
@@ -81,7 +83,7 @@ public class BookController {
      * @return The newly added book.
      * @throws SQLException If a database error occurs.
      */
-    public Book addBook(String isbn , String title, String description,Language lang,int quantity,int pages,String edition, int[] author_id, int[] category_id) throws SQLException {
+    public Book addBook(String isbn , String title, String description,Language lang,int quantity,int pages,String edition, String[] author_id, String[] category_id) throws SQLException {
         return bookDao.insert(
                 isbn ,
                 title,
@@ -109,7 +111,7 @@ public class BookController {
      * @return The updated book.
      * @throws SQLException If a database error occurs.
      */
-    public Book updateBook(String isbn , String title, String description,Language lang,int quantity,int pages,String edition, int[] author_id, int[] category_id) throws SQLException {
+    public Book updateBook(String isbn , String title, String description,Language lang,int quantity,int pages,String edition, String[] author_id, String[] category_id) throws SQLException {
         return bookDao.update(
                 isbn ,
                 title,

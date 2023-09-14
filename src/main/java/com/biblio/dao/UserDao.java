@@ -313,4 +313,19 @@ public final class UserDao extends Model {
         return null;
     }
 
+    public String[] getAllUser() {
+        List<Map<String, String>> resultList = this.getAll();
+        String[] users = new String[resultList.size()];
+
+        for (int i = 0; i < resultList.size(); i++) {
+            Map<String, String> rowData = resultList.get(i);
+            String id = rowData.get("cnie");
+            String fullName = id + " ," + rowData.get("first_name") + " " + rowData.get("last_name");
+
+            users[i] = fullName;
+        }
+
+        return users;
+    }
+
 }

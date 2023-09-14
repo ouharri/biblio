@@ -9,6 +9,7 @@ import com.biblio.libs.Model;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.*;
 
 public final class BookDao extends Model {
@@ -81,8 +82,8 @@ public final class BookDao extends Model {
                     "LEFT JOIN lost_books lb ON b.isbn = lb.book " +
                     "WHERE b.delete_at IS NULL " +
                     "AND (" +
-                    "    (bb.return_date IS NULL AND lb.actual_status IS NULL) OR " +
-                    "    (bb.return_date IS NULL AND lb.actual_status = 'still_lost')" +
+                    "    (bb.return_date IS NULL AND lb.actual_statut IS NULL) OR " +
+                    "    (bb.return_date IS NULL AND lb.actual_statut = 'still_lost')" +
                     ") " +
                     "GROUP BY b.isbn, b.quantities " +
                     "HAVING SUM(CASE WHEN bb.return_date IS NULL THEN 1 ELSE 0 END) < b.quantities " +
@@ -96,43 +97,6 @@ public final class BookDao extends Model {
         }
 
         return availableBooks;
-    }
-
-    public List<Book> getBorrowedBooks() {
-        List<Book> borrowedBooks = new ArrayList<>();
-
-        try {
-            String query = "SELECT DISTINCT" +
-                    "       b.isbn," +
-                    "       b.quantities," +
-                    "       b.pages," +
-                    "       b.title," +
-                    "       b.edition," +
-                    "       b.language," +
-                    "       b.description," +
-                    "       a.id AS author_id," +
-                    "       a.first_name AS author_firstName," +
-                    "       a.last_name AS author_lastName," +
-                    "       c.category," +
-                    "       c.description AS category_description " +
-                    "FROM books b " +
-                    "LEFT JOIN books_authors ba ON b.isbn = ba.book " +
-                    "LEFT JOIN authors a ON ba.author = a.id " +
-                    "LEFT JOIN categories_books cb ON b.isbn = cb.book " +
-                    "LEFT JOIN categories c ON cb.category = c.id " +
-                    "INNER JOIN borrowed_books bb ON b.isbn = bb.book " +
-                    "WHERE b.delete_at IS NULL " +
-                    "AND bb.return_date IS NULL " +
-                    "ORDER BY b.isbn;";
-
-            PreparedStatement preparedStatement = this.connection.prepareStatement(query);
-            executeAndWrapQuery(borrowedBooks, preparedStatement);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return borrowedBooks;
     }
 
     public List<Book> getLostBooks() {
@@ -159,7 +123,7 @@ public final class BookDao extends Model {
                     "LEFT JOIN categories c ON cb.category = c.id " +
                     "INNER JOIN lost_books lb ON b.isbn = lb.book " +
                     "WHERE b.delete_at IS NULL " +
-                    "AND lb.actual_status = " + LostStatus.STILL_LOST + " " +
+                    "AND lb.actual_statut = " + LostStatus.STILL_LOST + " " +
                     "ORDER BY b.isbn;";
 
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
@@ -243,8 +207,8 @@ public final class BookDao extends Model {
                     "WHERE b.delete_at IS NULL " +
                     "AND (b.isbn LIKE ? OR b.title LIKE ? OR b.description LIKE ? OR a.first_name LIKE ? OR a.last_name LIKE ? OR c.category LIKE ?) " +
                     "AND (" +
-                    "    (bb.return_date IS NULL AND lb.actual_status IS NULL) OR " +
-                    "    (bb.return_date IS NULL AND lb.actual_status = 'still_lost')" +
+                    "    (bb.return_date IS NULL AND lb.actual_statut IS NULL) OR " +
+                    "    (bb.return_date IS NULL AND lb.actual_statut = 'still_lost')" +
                     ") " +
                     "ORDER BY b.isbn;";
 
@@ -266,7 +230,7 @@ public final class BookDao extends Model {
         return availableBooks;
     }
 
-    public Book insert(String isbn, String title, String description, Language lang, int quantity, int pages, String edition, int[] authorIds, int[] categoryIds) throws SQLException {
+    public Book insert(String isbn, String title, String description, Language lang, int quantity, int pages, String edition, String[] authorIds, String[] categoryIds) throws SQLException {
         this.beginTransaction();
         try {
             this.book.setBook(
@@ -307,7 +271,7 @@ public final class BookDao extends Model {
         }
     }
 
-    public Book update(String isbn, String title, String description, Language lang, int quantity, int pages, String edition, int[] authorIds, int[] categoryIds) throws SQLException {
+    public Book update(String isbn, String title, String description, Language lang, int quantity, int pages, String edition, String[] authorIds, String[] categoryIds) throws SQLException {
         this.beginTransaction();
         try {
             this.book.setBook(
@@ -456,8 +420,8 @@ public final class BookDao extends Model {
                     "LEFT JOIN `borrowed_books` bb ON b.isbn = bb.book AND bb.return_date IS NULL " +
                     "LEFT JOIN `lost_books` lb ON b.isbn = lb.book " +
                     "WHERE b.isbn = ? AND (" +
-                    "    (bb.return_date IS NULL AND lb.actual_status IS NULL) OR " +
-                    "    (bb.return_date IS NULL AND lb.actual_status = 'still_lost')" +
+                    "    (bb.return_date IS NULL AND lb.actual_statut IS NULL) OR " +
+                    "    (bb.return_date IS NULL AND lb.actual_statut = 'still_lost')" +
                     ");";
 
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
@@ -647,9 +611,9 @@ public final class BookDao extends Model {
         return this.book;
     }
 
-    private boolean insertAuthorsForBook(String bookId, int[] authorIds) throws Exception {
+    private boolean insertAuthorsForBook(String bookId, String[] authorIds) throws Exception {
         try (BooksAuthorsDao authorBookDao = new BooksAuthorsDao()) {
-            for (int authorId : authorIds) {
+            for (String authorId : authorIds) {
                 Map<String, String> authorBook = new HashMap<>();
                 authorBook.put("author", String.valueOf(authorId));
                 authorBook.put("book", bookId);
@@ -661,9 +625,9 @@ public final class BookDao extends Model {
         }
     }
 
-    private boolean insertCategoriesForBook(String bookId, int[] categoryIds) throws Exception {
+    private boolean insertCategoriesForBook(String bookId, String[] categoryIds) throws Exception {
         try (CategorieBookDao categorieBookDao = new CategorieBookDao()) {
-            for (int categoryId : categoryIds) {
+            for (String categoryId : categoryIds) {
                 Map<String, String> categorieBookData = new HashMap<>();
                 categorieBookData.put("category", String.valueOf(categoryId));
                 categorieBookData.put("book", bookId);
@@ -710,7 +674,7 @@ public final class BookDao extends Model {
     public int getTotalLostBooks() {
         try {
             String query = "SELECT COUNT(*) FROM books WHERE delete_at IS NULL " +
-                    "AND isbn IN (SELECT book FROM lost_books WHERE actual_status = 'still_lost')";
+                    "AND isbn IN (SELECT book FROM lost_books WHERE actual_statut = 'still_lost')";
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -724,8 +688,9 @@ public final class BookDao extends Model {
 
     public int getTotalBorrowedBooks() {
         try {
-            String query = "SELECT COUNT(*) FROM books WHERE delete_at IS NULL " +
-                    "AND isbn IN (SELECT book FROM borrowed_books WHERE return_date IS NULL)";
+            String query = "SELECT COUNT(*) FROM borrowed_books";
+//            " WHERE delete_at IS NULL " +
+//                    "AND isbn IN (SELECT book FROM borrowed_books WHERE return_date IS NULL)";
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -741,7 +706,7 @@ public final class BookDao extends Model {
         try {
             String query = "SELECT COUNT(*) FROM books WHERE delete_at IS NULL " +
                     "AND isbn NOT IN (SELECT book FROM borrowed_books WHERE return_date IS NULL) " +
-                    "AND isbn NOT IN (SELECT book FROM lost_books WHERE actual_status = 'still_lost')";
+                    "AND isbn NOT IN (SELECT book FROM lost_books WHERE actual_statut = 'still_lost')";
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -757,7 +722,7 @@ public final class BookDao extends Model {
         try {
             String query = "SELECT COUNT(*) FROM books WHERE delete_at IS NULL " +
                     "AND isbn IN (SELECT book FROM borrowed_books WHERE return_date IS NULL) " +
-                    "AND isbn NOT IN (SELECT book FROM lost_books WHERE actual_status = 'still_lost')";
+                    "AND isbn NOT IN (SELECT book FROM lost_books WHERE actual_statut = 'still_lost')";
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -773,7 +738,7 @@ public final class BookDao extends Model {
         try {
             String query = "SELECT SUM(b.quantities) FROM books b " +
                     "WHERE b.delete_at IS NULL " +
-                    "AND b.isbn NOT IN (SELECT book FROM lost_books WHERE actual_status = 'still_lost')";
+                    "AND b.isbn NOT IN (SELECT book FROM lost_books WHERE actual_statut = 'still_lost')";
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -888,7 +853,4 @@ public final class BookDao extends Model {
         }
         return 0;
     }
-
-
-
 }
