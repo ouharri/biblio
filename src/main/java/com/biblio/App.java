@@ -22,6 +22,7 @@ public class App implements AutoCloseable{
     public static void main(String[] args) throws Exception {
         new Signing();
     }
+
     @Override
     public void close() throws Exception {
         if (this.connection != null) {
