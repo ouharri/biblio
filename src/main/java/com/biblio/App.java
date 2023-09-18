@@ -1,9 +1,6 @@
 package com.biblio;
 
-import com.biblio.app.Controllers.AuthenticationController;
-import com.biblio.app.Enums.Gender;
 import com.biblio.core.database;
-import com.biblio.dao.UserDao;
 import com.biblio.view.Authentication.Signing;
 
 import java.sql.Connection;

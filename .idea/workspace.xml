@@ -136,7 +136,7 @@
       <workItem from="1694506902813" duration="59654000" />
       <workItem from="1694678775837" duration="20913000" />
       <workItem from="1694708330403" duration="492000" />
-      <workItem from="1694736111323" duration="1581000" />
+      <workItem from="1694736111323" duration="3438000" />
     </task>
     <task id="LOCAL-00001" summary="L-2 migrate to javaFX">
       <created>1693864551197</created>
@@ -276,7 +276,15 @@
       <option name="project" value="LOCAL" />
       <updated>1694706575596</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="70% 😊">
+      <option name="closed" value="true" />
+      <created>1694784802558</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1694784802559</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -287,6 +295,7 @@
     <MESSAGE value="L-2 impement interface and abstract class" />
     <MESSAGE value="L-3 L-4 l-5 progress" />
     <MESSAGE value="migrate to javaFx java swing" />
+    <MESSAGE value="70% " />
     <MESSAGE value="70% " />
     <option name="LAST_COMMIT_MESSAGE" value="70% " />
   </component>
