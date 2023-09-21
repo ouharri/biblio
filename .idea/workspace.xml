@@ -7,6 +7,7 @@
     <list default="true" id="974a4e58-64ac-46a1-b270-b71322b9e800" name="Changes" comment="70% 😊">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/helpers/envLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/helpers/envLoader.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +49,7 @@
     &quot;full.screen.before.presentation.mode&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/proj/biblio/assets/icon&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/proj/cnss&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -137,7 +138,8 @@
       <workItem from="1694678775837" duration="20913000" />
       <workItem from="1694708330403" duration="492000" />
       <workItem from="1694736111323" duration="3438000" />
-      <workItem from="1695025169300" duration="758000" />
+      <workItem from="1695025169300" duration="3500000" />
+      <workItem from="1695122488331" duration="3704000" />
     </task>
     <task id="LOCAL-00001" summary="L-2 migrate to javaFX">
       <created>1693864551197</created>
@@ -293,7 +295,15 @@
       <option name="project" value="LOCAL" />
       <updated>1695025201928</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="70% 😊">
+      <option name="closed" value="true" />
+      <created>1695034715928</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1695034715928</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

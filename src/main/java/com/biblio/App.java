@@ -24,7 +24,7 @@ public class App implements AutoCloseable{
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() {
         if (this.connection != null) {
             try {
                 this.connection.close();
