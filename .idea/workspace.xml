@@ -4,22 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="974a4e58-64ac-46a1-b270-b71322b9e800" name="Changes" comment="70% 😊">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/biblio.sql" beforeDir="false" afterPath="$PROJECT_DIR$/assets/biblio.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/mvnw" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/mvnw.cmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/HelloApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/HelloController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/biblio/helpers/envLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/biblio/helpers/envLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/biblio/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/biblio/hello-view.fxml" afterDir="false" />
-    </list>
+    <list default="true" id="974a4e58-64ac-46a1-b270-b71322b9e800" name="Changes" comment="70% 😊" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -151,7 +136,7 @@
       <workItem from="1694736111323" duration="3438000" />
       <workItem from="1695025169300" duration="3500000" />
       <workItem from="1695122488331" duration="3704000" />
-      <workItem from="1695309671642" duration="1042000" />
+      <workItem from="1695309671642" duration="1301000" />
     </task>
     <task id="LOCAL-00001" summary="L-2 migrate to javaFX">
       <created>1693864551197</created>
@@ -315,7 +300,23 @@
       <option name="project" value="LOCAL" />
       <updated>1695034715928</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="70% 😊">
+      <option name="closed" value="true" />
+      <created>1695310959499</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1695310959499</updated>
+    </task>
+    <task id="LOCAL-00024" summary="70% 😊">
+      <option name="closed" value="true" />
+      <created>1695310976730</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1695310976730</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -326,6 +327,7 @@
     <MESSAGE value="L-2 impement interface and abstract class" />
     <MESSAGE value="L-3 L-4 l-5 progress" />
     <MESSAGE value="migrate to javaFx java swing" />
+    <MESSAGE value="70% " />
     <MESSAGE value="70% " />
     <MESSAGE value="70% " />
     <MESSAGE value="70% " />
