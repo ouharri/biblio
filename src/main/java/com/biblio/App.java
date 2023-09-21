@@ -1,5 +1,7 @@
 package com.biblio;
 
+import com.biblio.app.Controllers.AuthenticationController;
+import com.biblio.app.Enums.Gender;
 import com.biblio.core.database;
 import com.biblio.view.Authentication.Signing;
 
@@ -24,7 +26,7 @@ public class App implements AutoCloseable{
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() {
         if (this.connection != null) {
             try {
                 this.connection.close();
